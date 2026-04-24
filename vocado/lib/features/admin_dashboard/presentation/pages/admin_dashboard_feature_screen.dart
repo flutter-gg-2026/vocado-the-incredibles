@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/extensions/list_extensions.dart';
 import 'package:vocado/core/widgets/loading_widget.dart';
@@ -9,11 +10,12 @@ import 'package:vocado/features/admin_dashboard/presentation/cubit/admin_dashboa
 import 'package:vocado/features/admin_dashboard/presentation/widgets/overview_card.dart';
 import 'package:vocado/features/admin_dashboard/presentation/widgets/task_card_widget.dart';
 
-class AdminDashboardFeatureScreen extends StatelessWidget {
+class AdminDashboardFeatureScreen extends HookWidget {
   const AdminDashboardFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AdminDashboardCubit>();
+    final ScrollController scrollController = useScrollController();
 
     return DefaultTabController(
       length: 4,
@@ -22,11 +24,14 @@ class AdminDashboardFeatureScreen extends StatelessWidget {
           onRefresh: () => cubit.getAdminDashboardMethod(),
           edgeOffset: 18.sh,
           child: CustomScrollView(
+            controller: scrollController,
             slivers: [
               SliverAppBar(
                 title: Text('Tasks Dashboard'),
                 centerTitle: true,
-                backgroundColor: Colors.transparent,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                elevation: 0,
+                scrolledUnderElevation: 0,
                 pinned: true,
                 floating: true,
                 bottom: TabBar(
@@ -56,7 +61,7 @@ class AdminDashboardFeatureScreen extends StatelessWidget {
                 builder: (context, state) {
                   final successState = state is AdminDashboardSuccessState;
                   return switch (state) {
-                    AdminDashboardInitialState _ => SliverToBoxAdapter(
+                    AdminDashboardInitialState _ => SliverFillRemaining(
                       child: LoadingWidget(),
                     ),
                     AdminDashboardErrorState _ => SliverToBoxAdapter(
@@ -105,9 +110,8 @@ class AdminDashboardFeatureScreen extends StatelessWidget {
 
                                       Expanded(
                                         child: ListView.separated(
+                                          controller: scrollController,
                                           padding: .all(8),
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
                                           separatorBuilder: (context, index) =>
                                               Divider(
                                                 color: Colors.transparent,
@@ -144,21 +148,20 @@ class AdminDashboardFeatureScreen extends StatelessWidget {
     0 => allTask,
     1 =>
       allTask
-          .takeWhile(
+          .where(
             (value) =>
                 !value.completed &&
-                DateTime.now().difference(value.dueDate).inDays <= 0,
+                value.dueDate.compareTo(DateTime.now()) == 1,
           )
           .toList(),
     2 =>
       allTask
-          .takeWhile(
+          .where(
             (value) =>
-                !value.completed &&
-                DateTime.now().compareTo(value.dueDate) >= 1,
+                !value.completed && value.dueDate.isBefore(DateTime.now()),
           )
           .toList(),
-    3 => allTask.takeWhile((value) => value.completed).toList(),
+    3 => allTask.where((value) => value.completed).toList(),
     _ => allTask,
   };
 }
