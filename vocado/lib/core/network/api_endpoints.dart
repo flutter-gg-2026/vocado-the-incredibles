@@ -27,7 +27,8 @@ class ApiEndpoints {
   // Google-Gemini 3.1 Flash service
   static const String googleGeminiBaseUrl =
       'https://generativelanguage.googleapis.com';
-  static const String geminiModel = 'gemini-3-flash-preview';
+  static const String geminiModel3Flash = 'gemini-3-flash-preview';
+  static const String geminiModel25Flash = 'gemini-2.5-flash';
   // To request data by id
   /* static String googleGeminiModelEndpoint(String model, String key) =>
       '$googleGeminiBaseUrl/v1beta/models/$model:generateContent?key={$key}'; */

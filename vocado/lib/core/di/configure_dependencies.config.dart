@@ -30,6 +30,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final thirdPartyConfig = _$ThirdPartyConfig();
+    gh.factory<_i667.DioClient>(() => _i667.DioClient());
     gh.lazySingleton<_i792.GetStorage>(() => thirdPartyConfig.storage);
     gh.lazySingleton<_i454.SupabaseClient>(
       () => thirdPartyConfig.supabaseClient,
@@ -37,7 +38,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => thirdPartyConfig.flutterSecureStorage,
     );
-    gh.lazySingleton<_i667.DioClient>(() => _i667.DioClient());
     gh.lazySingleton<_i982.RecordService>(() => _i982.RecordService());
     gh.lazySingleton<_i416.GoogleGemini>(
       () => _i416.GoogleGemini(gh<_i667.DioClient>()),

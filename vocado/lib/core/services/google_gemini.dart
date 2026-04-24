@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/core/network/api_endpoints.dart';
@@ -11,12 +10,9 @@ import 'package:vocado/core/network/dio_client.dart';
 class GoogleGemini {
   final DioClient _dioClient;
 
-  late Dio _dio;
-
   GoogleGemini(this._dioClient) {
-    _dio = _dioClient.dio;
-    _dio.options.baseUrl = ApiEndpoints.googleGeminiBaseUrl;
-    _dio.options.headers = {
+    _dioClient.dio.options.baseUrl = ApiEndpoints.googleGeminiBaseUrl;
+    _dioClient.dio.options.headers = {
       "Content-Type": "application/json",
       "x-goog-api-key": dotenv.env['google_gemini'],
     };
@@ -25,21 +21,12 @@ class GoogleGemini {
   Future<Map<String, dynamic>> getTaskStructured({
     required String content,
   }) async {
-    /* final Dio dio = Dio(
-      BaseOptions(
-        baseUrl: ApiEndpoints.googleGeminiBaseUrl,
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": dotenv.env['google_gemini'],
-        },
-      ),
-    ); */
     final body = {
       "systemInstruction": {
         "parts": [
           {
             "text":
-                '''"Extract required info from content and if some is missing respond with "not enough info" otherwise Respond with exact json format as { "task": "task from content", "assignee": "member name", "due_date": "yyyy-mm-dd" }"''',
+                'Extract required info from content and if some is missing respond with "not enough info" otherwise Respond with exact absolute response json format with no ```json as "{ "task": "task from content", "assignee": "member name", "due_date": "yyyy-mm-dd" }"',
           },
         ],
       },
@@ -54,10 +41,12 @@ class GoogleGemini {
 
     log('Google Service Started');
 
-    final taskJson = await _dio.post(
-      ApiEndpoints.googleGeminiModelEndpoint(ApiEndpoints.geminiModel),
+    /* final taskJson = await _dioClient.post(
+      ApiEndpoints.googleGeminiModelEndpoint(ApiEndpoints.geminiModel25Flash),
       data: body,
     );
+
+    log(taskJson.data.toString());
 
     final response =
         taskJson.data['candidates'][0]['content']['parts'][0]['text'];
@@ -66,9 +55,9 @@ class GoogleGemini {
 
     if ((response as String).contains('not enough info')) {
       throw Exception('No Task is recognized');
-    }
+    } */
 
-    final json = jsonDecode(response);
+    final json = jsonDecode('{ "task": "send the files", "assignee": "Hatem", "due_date": "2026-04-25" }');
 
     log('Google Service Finished');
 

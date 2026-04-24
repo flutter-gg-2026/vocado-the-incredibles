@@ -26,13 +26,13 @@ class AddConfirmationWidget extends StatelessWidget {
           style: ButtonStyle(foregroundColor: .all(Colors.redAccent)),
           child: const Text('Cancel'),
           onPressed: () {
-            context.pop(false); // Returns false
+            context.pop(false);
           },
         ),
         TextButton(
           child: const Text('Confirm'),
           onPressed: () {
-            context.pop(true); // Returns true
+            context.pop(true);
           },
         ),
       ],
