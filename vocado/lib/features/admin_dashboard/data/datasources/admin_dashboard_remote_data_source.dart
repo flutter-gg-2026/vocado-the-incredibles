@@ -18,16 +18,5 @@ class AdminDashboardRemoteDataSource
     await Future.delayed(Duration(seconds: 2));
     final tasks = await _supabase.from('tasks').select().eq('assigned_by', '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb');
     return tasks.map((json) => AdminDashboardModel.fromJson(json)).toList();
-    /* return List.generate(
-      10,
-      (index) => AdminDashboardModel(
-        id: '546984rwegf',
-        task: 'Sending Manger Files',
-        assignee: 'Hatem',
-        assigneeId: '6eh5r1t6',
-        dueDate: DateTime(2026, 4, 20),
-        completed: false,
-      ),
-    ); */
   }
 }

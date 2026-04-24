@@ -31,7 +31,7 @@ class RecordService {
     final path = await record.stop();
     log('Recording Stopped');
 
-    if ((await player.setFilePath(path!))!.inSeconds < 2) {
+    if ((await player.setFilePath(path!))!.inMilliseconds < 1500) {
       throw Exception('Audio duration is less than 2 seconds');
     }
     return File(path);

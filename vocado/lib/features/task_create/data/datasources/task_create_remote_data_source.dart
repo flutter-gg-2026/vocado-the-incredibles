@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:uuid/uuid.dart';
 import 'package:vocado/core/services/google_gemini.dart';
 import 'package:vocado/core/services/speech_to_text.dart';
 import 'package:vocado/features/task_create/data/models/task_create_model.dart';
@@ -28,9 +27,7 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
   @override
   Future<TaskCreateModel> getTaskCreate(File audio) async {
     await Future.delayed(Duration(seconds: 1));
-    /* final transcript = await _speechToText.transcriptAudio(audio);
-
-    log(transcript.toString()); */
+    /* final transcript = await _speechToText.transcriptAudio(audio);*/
 
     final taskJson = await _googleGemini.getTaskStructured(
       content:
@@ -42,18 +39,20 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
 
   @override
   Future<void> saveTask(TaskCreateEntity newTask) async {
-    final assignee = await _supabase
+    /* final assignee = await _supabase
         .from('users')
         .select()
         .ilike('name', '%${newTask.assignee}%');
 
+    log(assignee.toString());
+
     if (assignee.isEmpty) {
       throw Exception('No Member found.');
-    }
+    } */
 
     await _supabase.from('tasks').insert({
       "task": newTask.task,
-      "assignee_id": assignee[0]['id'],
+      "assignee_id": '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb',
       "assigned_by": "27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb",
       "due_date": newTask.dueDate.toIso8601String(),
     });
