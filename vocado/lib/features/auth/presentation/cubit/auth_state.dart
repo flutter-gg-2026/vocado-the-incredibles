@@ -10,6 +10,7 @@ abstract class AuthState extends Equatable {
 
 
 class AuthInitialState extends AuthState {}
+class AuthLoadingState extends AuthState {}
 class AuthSuccessState extends AuthState {
   final AuthEntity? user;
   const AuthSuccessState(this.user);

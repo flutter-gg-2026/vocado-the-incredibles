@@ -9,7 +9,7 @@ import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.splash,
     routes: [
       GoRoute(
         path: Routes.splash,

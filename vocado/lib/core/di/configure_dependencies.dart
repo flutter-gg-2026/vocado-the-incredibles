@@ -3,6 +3,8 @@ import 'package:vocado/core/di/configure_dependencies.config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/features/auth/di/auth_di.dart';
 
+  final getIt = GetIt.instance;
+
 @InjectableInit(
   initializerName: 'init', 
   preferRelativeImports: true,
@@ -11,7 +13,6 @@ import 'package:vocado/features/auth/di/auth_di.dart';
 )
 
 Future<void> configureDependencies() async {
-  final getIt = GetIt.instance;
   getIt.init();
-    configureAuth(getIt);
+  configureAuth(getIt);
 }

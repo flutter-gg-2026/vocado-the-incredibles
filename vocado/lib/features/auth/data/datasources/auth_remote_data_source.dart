@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:vocado/core/common/models/auth_model.dart';
 import 'package:vocado/core/services/local_keys_service.dart';
-import 'package:vocado/features/auth/data/models/auth_model.dart';
 
 abstract class BaseAuthRemoteDataSource {
   // Future<AuthModel> getAuth();
@@ -34,7 +34,7 @@ Future<Map<String, dynamic>> getCurrentUser(int userId) async {
         .eq('id', userId)
         .single();
 
-    return AuthModel.fromJson(response).toJson();
+    return response;
 
   } catch (error) {
     print(error.toString());
@@ -82,7 +82,7 @@ Future<AuthModel> signUp(String email, String password, String role, String name
     }
 
     final inserted = await _supabase.from('users').insert({
-      // 'id': user.id, 
+      'id': user.id, 
       'email': email,
       'name': '',
       'role': role, 

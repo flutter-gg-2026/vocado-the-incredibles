@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/core/di/configure_dependencies.dart';
+import 'package:vocado/core/services/serviceUser.dart';
 import 'package:vocado/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_state.dart';
 
@@ -6,11 +8,15 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthUseCase _authUseCase;
   AuthCubit(this._authUseCase) : super(AuthInitialState());
 
+  final service = getIt<ServiceUser>();
+
   Future<void> loginMethod(String email, String password) async {
     final result = await _authUseCase.logIn(email,password);
-    emit(AuthInitialState());
+    emit(AuthLoadingState());
     result.when(
       (success) {
+        // service.setUser(success);
+        // service.isLoggedIn;
         emit(AuthSuccessState(success));
       },
       (whenError) {
