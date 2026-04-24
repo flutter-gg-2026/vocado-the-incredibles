@@ -25,7 +25,7 @@ class GoogleGemini {
   Future<Map<String, dynamic>> getTaskStructured({
     required String content,
   }) async {
-    final Dio dio = Dio(
+    /* final Dio dio = Dio(
       BaseOptions(
         baseUrl: ApiEndpoints.googleGeminiBaseUrl,
         headers: {
@@ -33,7 +33,7 @@ class GoogleGemini {
           "x-goog-api-key": dotenv.env['google_gemini'],
         },
       ),
-    );
+    ); */
     final body = {
       "systemInstruction": {
         "parts": [
@@ -54,7 +54,7 @@ class GoogleGemini {
 
     log('Google Service Started');
 
-    final taskJson = await dio.post(
+    final taskJson = await _dio.post(
       ApiEndpoints.googleGeminiModelEndpoint(ApiEndpoints.geminiModel),
       data: body,
     );
