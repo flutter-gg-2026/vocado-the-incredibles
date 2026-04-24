@@ -14,11 +14,12 @@ class TaskCreateLoadingState extends TaskCreateState {}
 
 class TaskCreateSuccessState extends TaskCreateState {
   final TaskCreateEntity task;
+  final bool? isSaved;
 
-  const TaskCreateSuccessState({required this.task});
+  const TaskCreateSuccessState({required this.task, this.isSaved});
 
   @override
-  List<Object?> get props => [task];
+  List<Object?> get props => [task, isSaved];
 }
 
 class TaskCreateErrorState extends TaskCreateState {

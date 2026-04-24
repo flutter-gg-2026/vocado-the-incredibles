@@ -17,15 +17,26 @@ class TaskCreateFeatureScreen extends StatelessWidget {
     return Scaffold(
       body: BlocListener<TaskCreateCubit, TaskCreateState>(
         listener: (context, state) {
+          context.hideLoading();
           if (state is TaskCreateSuccessState) {
-            showDialog(
-              context: context,
-              builder: (context) => AddConfirmationWidget(task: state.task),
-            ).then((value) {
-              if (value == true) {
-                print('to Save');
-              }
-            });
+            if (state.isSaved == null) {
+              showDialog(
+                context: context,
+                builder: (context) => AddConfirmationWidget(task: state.task),
+              ).then((value) {
+                if (value == true) {
+                  print('to Save');
+                  if (context.mounted) {
+                    cubit.saveTask(state.task);
+                    context.showLoading();
+                  }
+                }
+              });
+            }
+
+            if (state.isSaved == true) {
+              context.showSnackBar('Task is created successfully');
+            }
           }
           if (state is TaskCreateErrorState) {
             context.showSnackBar(state.message, isError: true);
@@ -62,9 +73,9 @@ class TaskCreateFeatureScreen extends StatelessWidget {
                     child: BlocBuilder<TaskCreateCubit, TaskCreateState>(
                       builder: (context, state) {
                         return state is TaskCreateLoadingState
-                            ? LoadingWidget(size: 10.sh)
+                            ? LoadingWidget(size: 8.sh)
                             : RecorderFeatureWidget(
-                                size: 10.sh,
+                                size: 8.sh,
                                 onCallBack: (audio) =>
                                     cubit.getTaskCreateMethod(audio),
                               );

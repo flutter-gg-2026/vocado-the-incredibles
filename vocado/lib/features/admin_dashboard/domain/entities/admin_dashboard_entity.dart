@@ -1,16 +1,29 @@
 import 'package:equatable/equatable.dart';
 
 class AdminDashboardEntity extends Equatable {
-  final int id;
-  final String firstName;
-  final String lastName;
+  final String id;
+  final String task;
+  final String assignee;
+  final String assigneeId;
+  final DateTime dueDate;
+  final bool completed;
 
   const AdminDashboardEntity({
     required this.id,
-    required this.firstName,
-    required this.lastName,
+    required this.task,
+    required this.assignee,
+    required this.assigneeId,
+    required this.dueDate,
+    required this.completed,
   });
 
   @override
-  List<Object?> get props => [firstName, lastName, id];
+  List<Object?> get props => [
+    id,
+    task,
+    assignee,
+    assigneeId,
+    dueDate,
+    completed,
+  ];
 }

@@ -11,7 +11,7 @@ class AdminDashboardUseCase {
 
   AdminDashboardUseCase(this._repositoryData);
 
-   Future<Result<AdminDashboardEntity, Failure>> getAdminDashboard() async {
+   Future<Result<List<AdminDashboardEntity>, Failure>> getAdminDashboard() async {
     return _repositoryData.getAdminDashboard();
   }
 }

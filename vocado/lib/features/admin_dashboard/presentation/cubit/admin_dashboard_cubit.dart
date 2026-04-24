@@ -5,16 +5,20 @@ import 'package:vocado/features/admin_dashboard/presentation/cubit/admin_dashboa
 class AdminDashboardCubit extends Cubit<AdminDashboardState> {
   final AdminDashboardUseCase _adminDashboardUseCase;
 
-  AdminDashboardCubit(this._adminDashboardUseCase) : super(AdminDashboardInitialState());
+  AdminDashboardCubit(this._adminDashboardUseCase)
+    : super(AdminDashboardInitialState()) {
+    getAdminDashboardMethod();
+  }
 
   Future<void> getAdminDashboardMethod() async {
+    emit(AdminDashboardInitialState());
     final result = await _adminDashboardUseCase.getAdminDashboard();
     result.when(
       (success) {
-        //here is when success result
+        emit(AdminDashboardSuccessState(tasks: success));
       },
       (whenError) {
-       //here is when error result
+        emit(AdminDashboardErrorState(message: whenError.message));
       },
     );
   }

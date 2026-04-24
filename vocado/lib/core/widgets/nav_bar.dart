@@ -9,10 +9,14 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       bottomNavigationBar: SafeArea(
         child: CurvedNavigationBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          height: 50,
+          index: navigationShell.currentIndex,
+          backgroundColor: Colors.transparent,
+          color: Theme.of(context).colorScheme.primary,
+          buttonBackgroundColor: Theme.of(context).colorScheme.primary,
           items: [Icon(Icons.home, size: 30), Icon(Icons.dashboard, size: 30)],
           onTap: (index) {
             navigationShell.goBranch(index);

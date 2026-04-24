@@ -8,15 +8,21 @@ part of 'admin_dashboard_model.dart';
 
 _AdminDashboardModel _$AdminDashboardModelFromJson(Map<String, dynamic> json) =>
     _AdminDashboardModel(
-      id: (json['id'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      id: json['id'] as String,
+      task: json['task'] as String,
+      assignee: json['assignee'] as String?,
+      assigneeId: json['assignee_id'] as String,
+      dueDate: DateTime.parse(json['due_date'] as String),
+      completed: json['completed'] as bool,
     );
 
 Map<String, dynamic> _$AdminDashboardModelToJson(
   _AdminDashboardModel instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  'firstName': instance.firstName,
-  'lastName': instance.lastName,
+  'task': instance.task,
+  'assignee': instance.assignee,
+  'assignee_id': instance.assigneeId,
+  'due_date': instance.dueDate.toIso8601String(),
+  'completed': instance.completed,
 };

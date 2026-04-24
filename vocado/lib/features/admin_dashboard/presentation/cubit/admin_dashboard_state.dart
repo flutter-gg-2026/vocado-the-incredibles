@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_entity.dart';
 
 abstract class AdminDashboardState extends Equatable {
   const AdminDashboardState();
@@ -8,7 +9,15 @@ abstract class AdminDashboardState extends Equatable {
 }
 
 class AdminDashboardInitialState extends AdminDashboardState {}
-class AdminDashboardSuccessState extends AdminDashboardState {}
+
+class AdminDashboardSuccessState extends AdminDashboardState {
+  final List<AdminDashboardEntity> tasks;
+
+  const AdminDashboardSuccessState({required this.tasks});
+
+  @override
+  List<Object?> get props => [tasks];
+}
 
 class AdminDashboardErrorState extends AdminDashboardState {
   final String message;
@@ -16,4 +25,3 @@ class AdminDashboardErrorState extends AdminDashboardState {
   @override
   List<Object?> get props => [message];
 }
-

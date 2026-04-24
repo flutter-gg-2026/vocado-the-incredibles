@@ -57,7 +57,9 @@ class GoogleGemini {
       throw Exception('No Task is recognized');
     } */
 
-    final json = jsonDecode('{ "task": "send the files", "assignee": "Hatem", "due_date": "2026-04-25" }');
+    final json = jsonDecode(
+      '{ "task": "finish the proposal", "assignee": "Hatem", "due_date": "2025-04-25" }',
+    );
 
     log('Google Service Finished');
 

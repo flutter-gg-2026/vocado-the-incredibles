@@ -11,16 +11,14 @@ abstract class TaskCreateModel with _$TaskCreateModel {
     required String task,
     required String assignee,
     required DateTime dueDate,
-    
   }) = _TaskCreateModel;
 
-  factory TaskCreateModel.fromJson(Map<String, Object?> json) => _$TaskCreateModelFromJson(json);
+  factory TaskCreateModel.fromJson(Map<String, Object?> json) =>
+      _$TaskCreateModelFromJson(json);
 }
-
-
 
 extension TaskCreateModelMapper on TaskCreateModel {
   TaskCreateEntity toEntity() {
     return TaskCreateEntity(task: task, assignee: assignee, dueDate: dueDate);
   }
-  }
+}

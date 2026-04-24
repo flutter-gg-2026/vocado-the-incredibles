@@ -17,10 +17,12 @@ class AdminDashboardRepositoryData implements AdminDashboardRepositoryDomain{
   AdminDashboardRepositoryData(this.remoteDataSource);
 
 @override
-  Future<Result<AdminDashboardEntity, Failure>> getAdminDashboard() async {
+  Future<Result<List<AdminDashboardEntity>, Failure>> getAdminDashboard() async {
     try {
       final response = await remoteDataSource.getAdminDashboard();
-      return Success(response.toEntity());
+      return Success(response.map((item) => item.toEntity()).toList());
+    } on Failure catch (error) {
+      return Error(error);
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }

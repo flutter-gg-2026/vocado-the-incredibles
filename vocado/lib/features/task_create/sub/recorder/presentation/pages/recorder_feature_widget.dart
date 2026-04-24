@@ -47,6 +47,7 @@ class RecorderFeatureWidget extends StatelessWidget {
                   ),
                   minimumSize: .all(.fromRadius((size ?? 25) * 0.8)),
                   iconSize: .all(size ?? 25),
+                  iconColor: .all(Theme.of(context).colorScheme.onSurface),
                 ),
 
                 icon: Icon(Icons.mic_none),

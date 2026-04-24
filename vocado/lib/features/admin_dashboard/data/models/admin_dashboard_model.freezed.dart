@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AdminDashboardModel {
 
- int get id; String get firstName; String get lastName;
+ String get id; String get task; String? get assignee; String get assigneeId; DateTime get dueDate; bool get completed;
 /// Create a copy of AdminDashboardModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $AdminDashboardModelCopyWith<AdminDashboardModel> get copyWith => _$AdminDashboa
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminDashboardModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AdminDashboardModel&&(identical(other.id, id) || other.id == id)&&(identical(other.task, task) || other.task == task)&&(identical(other.assignee, assignee) || other.assignee == assignee)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.completed, completed) || other.completed == completed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
+int get hashCode => Object.hash(runtimeType,id,task,assignee,assigneeId,dueDate,completed);
 
 @override
 String toString() {
-  return 'AdminDashboardModel(id: $id, firstName: $firstName, lastName: $lastName)';
+  return 'AdminDashboardModel(id: $id, task: $task, assignee: $assignee, assigneeId: $assigneeId, dueDate: $dueDate, completed: $completed)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $AdminDashboardModelCopyWith<$Res>  {
   factory $AdminDashboardModelCopyWith(AdminDashboardModel value, $Res Function(AdminDashboardModel) _then) = _$AdminDashboardModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String firstName, String lastName
+ String id, String task, String? assignee, String assigneeId, DateTime dueDate, bool completed
 });
 
 
@@ -65,12 +65,15 @@ class _$AdminDashboardModelCopyWithImpl<$Res>
 
 /// Create a copy of AdminDashboardModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? task = null,Object? assignee = freezed,Object? assigneeId = null,Object? dueDate = null,Object? completed = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,task: null == task ? _self.task : task // ignore: cast_nullable_to_non_nullable
+as String,assignee: freezed == assignee ? _self.assignee : assignee // ignore: cast_nullable_to_non_nullable
+as String?,assigneeId: null == assigneeId ? _self.assigneeId : assigneeId // ignore: cast_nullable_to_non_nullable
+as String,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
+as DateTime,completed: null == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -155,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String task,  String? assignee,  String assigneeId,  DateTime dueDate,  bool completed)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AdminDashboardModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.task,_that.assignee,_that.assigneeId,_that.dueDate,_that.completed);case _:
   return orElse();
 
 }
@@ -176,10 +179,10 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String task,  String? assignee,  String assigneeId,  DateTime dueDate,  bool completed)  $default,) {final _that = this;
 switch (_that) {
 case _AdminDashboardModel():
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.task,_that.assignee,_that.assigneeId,_that.dueDate,_that.completed);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +199,10 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String firstName,  String lastName)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String task,  String? assignee,  String assigneeId,  DateTime dueDate,  bool completed)?  $default,) {final _that = this;
 switch (_that) {
 case _AdminDashboardModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.task,_that.assignee,_that.assigneeId,_that.dueDate,_that.completed);case _:
   return null;
 
 }
@@ -208,15 +211,18 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: .snake)
 class _AdminDashboardModel implements AdminDashboardModel {
-  const _AdminDashboardModel({required this.id, required this.firstName, required this.lastName});
+  const _AdminDashboardModel({required this.id, required this.task, this.assignee, required this.assigneeId, required this.dueDate, required this.completed});
   factory _AdminDashboardModel.fromJson(Map<String, dynamic> json) => _$AdminDashboardModelFromJson(json);
 
-@override final  int id;
-@override final  String firstName;
-@override final  String lastName;
+@override final  String id;
+@override final  String task;
+@override final  String? assignee;
+@override final  String assigneeId;
+@override final  DateTime dueDate;
+@override final  bool completed;
 
 /// Create a copy of AdminDashboardModel
 /// with the given fields replaced by the non-null parameter values.
@@ -231,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminDashboardModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AdminDashboardModel&&(identical(other.id, id) || other.id == id)&&(identical(other.task, task) || other.task == task)&&(identical(other.assignee, assignee) || other.assignee == assignee)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.completed, completed) || other.completed == completed));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
+int get hashCode => Object.hash(runtimeType,id,task,assignee,assigneeId,dueDate,completed);
 
 @override
 String toString() {
-  return 'AdminDashboardModel(id: $id, firstName: $firstName, lastName: $lastName)';
+  return 'AdminDashboardModel(id: $id, task: $task, assignee: $assignee, assigneeId: $assigneeId, dueDate: $dueDate, completed: $completed)';
 }
 
 
@@ -251,7 +257,7 @@ abstract mixin class _$AdminDashboardModelCopyWith<$Res> implements $AdminDashbo
   factory _$AdminDashboardModelCopyWith(_AdminDashboardModel value, $Res Function(_AdminDashboardModel) _then) = __$AdminDashboardModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String firstName, String lastName
+ String id, String task, String? assignee, String assigneeId, DateTime dueDate, bool completed
 });
 
 
@@ -268,12 +274,15 @@ class __$AdminDashboardModelCopyWithImpl<$Res>
 
 /// Create a copy of AdminDashboardModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? task = null,Object? assignee = freezed,Object? assigneeId = null,Object? dueDate = null,Object? completed = null,}) {
   return _then(_AdminDashboardModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,task: null == task ? _self.task : task // ignore: cast_nullable_to_non_nullable
+as String,assignee: freezed == assignee ? _self.assignee : assignee // ignore: cast_nullable_to_non_nullable
+as String?,assigneeId: null == assigneeId ? _self.assigneeId : assigneeId // ignore: cast_nullable_to_non_nullable
+as String,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
+as DateTime,completed: null == completed ? _self.completed : completed // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
