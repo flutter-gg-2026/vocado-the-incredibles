@@ -1,0 +1,7 @@
+import 'package:multiple_result/multiple_result.dart';
+import 'package:vocado/core/errors/failure.dart';
+import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_entity.dart';
+
+abstract class AdminDashboardRepositoryDomain {
+    Future<Result<AdminDashboardEntity, Failure>> getAdminDashboard();
+}

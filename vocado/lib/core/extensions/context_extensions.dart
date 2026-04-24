@@ -4,11 +4,18 @@ import 'package:vocado/core/widgets/loading_widget.dart';
 
 extension ContextExtensions on BuildContext {
   // Snackbar
-  void showSnackBar(String message, {bool isError = false}) {
+  void showSnackBar(
+    String message, {
+    bool isError = false,
+    SnackBarBehavior? behavior,
+    Duration? duration,
+  }) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: isError ? Colors.red : Colors.green,
+        behavior: behavior ?? .floating,
+        duration: duration ?? Duration(seconds: 3),
       ),
     );
   }
