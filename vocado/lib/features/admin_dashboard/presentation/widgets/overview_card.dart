@@ -5,7 +5,13 @@ class OverviewCard extends StatelessWidget {
   final String? number;
   final IconData? icon;
   final Color? color;
-  const OverviewCard({super.key, this.title, this.number, this.icon, this.color});
+  const OverviewCard({
+    super.key,
+    this.title,
+    this.number,
+    this.icon,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,16 @@ class OverviewCard extends StatelessWidget {
                 Icon(icon),
               ],
             ),
-            Row(children: [Text(number ?? '0')]),
+            Row(
+              children: [
+                Text(
+                  number ?? '0',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

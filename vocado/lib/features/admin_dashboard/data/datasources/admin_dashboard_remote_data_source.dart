@@ -18,10 +18,16 @@ class AdminDashboardRemoteDataSource
   @override
   Future<List<AdminDashboardModel>> getAdminDashboard() async {
     await Future.delayed(Duration(seconds: 2));
-    final tasks = await _supabase
+    final response = await _supabase
         .from('tasks')
-        .select()
-        .eq('assigned_by', _serviceUser.currentUser!.id);
+        .select('*, users!assignee_id(name)')
+        .eq('assigned_by', '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb');
+
+    final tasks = response.map((task) {
+      task['name'] = task['users']['name'];
+      task.remove('users');
+      return task;
+    }).toList();
     return tasks.map((json) => AdminDashboardModel.fromJson(json)).toList();
   }
 }

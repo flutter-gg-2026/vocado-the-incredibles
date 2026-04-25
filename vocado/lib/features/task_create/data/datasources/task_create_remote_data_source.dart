@@ -24,17 +24,15 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
     this._supabase,
     this._googleGemini,
     this._speechToText,
-    this._serviceUser
+    this._serviceUser,
   );
 
   @override
   Future<TaskCreateModel> getTaskCreate(File audio) async {
-    await Future.delayed(Duration(seconds: 1));
-    /* final transcript = await _speechToText.transcriptAudio(audio);*/
+    final transcript = await _speechToText.transcriptAudio(audio);
 
     final taskJson = await _googleGemini.getTaskStructured(
-      content:
-          'Hatem, please finish the proposal; the required deadline is April 25, 2025',
+      content: transcript['english'],
     );
 
     return TaskCreateModel.fromJson(taskJson);
@@ -42,21 +40,30 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
 
   @override
   Future<void> saveTask(TaskCreateEntity newTask) async {
-    /* final assignee = await _supabase
+    final assignee = await _supabase
         .from('users')
         .select()
         .ilike('name', '%${newTask.assignee}%');
 
-    log(assignee.toString());
-
     if (assignee.isEmpty) {
-      throw Exception('No Member found.');
-    } */
+      throw Exception('No User found for "${newTask.assignee}" found.');
+    }
+
+    final isMember = await _supabase
+        .from('members')
+        .select()
+        .eq('user_id', assignee[0]['id']);
+
+    if (isMember.isEmpty) {
+      throw Exception(
+        'No Member found for "${newTask.assignee}" found. Please add member first',
+      );
+    }
 
     await _supabase.from('tasks').insert({
       "task": newTask.task,
-      "assignee_id": '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb',
-      "assigned_by": _serviceUser.currentUser!.id,
+      "assignee_id": assignee[0]['id'],
+      "assigned_by": '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb',
       "due_date": newTask.dueDate.toIso8601String(),
     });
   }

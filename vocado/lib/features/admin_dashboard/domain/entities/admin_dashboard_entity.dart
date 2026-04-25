@@ -6,6 +6,7 @@ class AdminDashboardEntity extends Equatable {
   final String assignee;
   final String assigneeId;
   final DateTime dueDate;
+  final DateTime createdAt;
   final bool completed;
 
   const AdminDashboardEntity({
@@ -14,7 +15,7 @@ class AdminDashboardEntity extends Equatable {
     required this.assignee,
     required this.assigneeId,
     required this.dueDate,
-    required this.completed,
+    required this.completed, required this.createdAt,
   });
 
   @override

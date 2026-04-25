@@ -64,7 +64,7 @@ class AdminDashboardFeatureScreen extends HookWidget {
                     AdminDashboardInitialState _ => SliverFillRemaining(
                       child: LoadingWidget(),
                     ),
-                    AdminDashboardErrorState _ => SliverToBoxAdapter(
+                    AdminDashboardErrorState _ => SliverFillRemaining(
                       child: Center(child: Text(state.message)),
                     ),
                     AdminDashboardSuccessState _ => SliverFillRemaining(
@@ -144,24 +144,30 @@ class AdminDashboardFeatureScreen extends HookWidget {
   List<AdminDashboardEntity> _filterList(
     List<AdminDashboardEntity> allTask,
     int index,
-  ) => switch (index) {
-    0 => allTask,
-    1 =>
-      allTask
-          .where(
-            (value) =>
-                !value.completed &&
-                value.dueDate.compareTo(DateTime.now()) == 1,
-          )
-          .toList(),
-    2 =>
-      allTask
-          .where(
-            (value) =>
-                !value.completed && value.dueDate.isBefore(DateTime.now()),
-          )
-          .toList(),
-    3 => allTask.where((value) => value.completed).toList(),
-    _ => allTask,
-  };
+  ) {
+    final now = DateTime.now();
+    return switch (index) {
+      0 => allTask,
+      1 =>
+        allTask
+            .where(
+              (value) =>
+                  !value.completed &&
+                  (now.compareTo(value.dueDate) == -1 ||
+                      DateUtils.isSameDay(value.dueDate, now)),
+            )
+            .toList(),
+      2 =>
+        allTask
+            .where(
+              (value) =>
+                  !value.completed &&
+                  (value.dueDate.isBefore(now) &&
+                      !DateUtils.isSameDay(value.dueDate, now)),
+            )
+            .toList(),
+      3 => allTask.where((value) => value.completed).toList(),
+      _ => allTask,
+    };
+  }
 }
