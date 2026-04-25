@@ -72,10 +72,16 @@ class AdminDashboardFeatureScreen extends HookWidget {
                         top: false,
                         child: TabBarView(
                           children: List.generate(4, (index) {
+                            if (state.tasks.isNotEmpty) {
+                              state.tasks[0] = state.tasks[0].copyWith(
+                                completed: true,
+                              );
+                            }
                             final filteredTasks = _filterList(
                               state.tasks,
                               index,
                             );
+
                             return filteredTasks.isEmpty
                                 ? Center(child: Text('No Tasks Here'))
                                 : Column(
