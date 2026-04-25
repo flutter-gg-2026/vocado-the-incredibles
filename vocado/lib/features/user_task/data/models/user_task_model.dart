@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vocado/features/user_task/domain/entities/user_task_entity.dart';
-
 part 'user_task_model.freezed.dart';
 
 

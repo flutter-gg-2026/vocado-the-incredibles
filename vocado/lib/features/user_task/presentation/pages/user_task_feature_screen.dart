@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_cubit.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_state.dart';
 import 'package:vocado/features/user_task/presentation/widgets/empty_tasks_card.dart';
@@ -31,20 +29,37 @@ class UserTaskFeatureScreen extends StatelessWidget {
             }
 
             if (state is UserTaskSuccessState) {
-              final name = state.tasks.isNotEmpty
-                  ? state.tasks.first.name
-                  : 'User';
+              final allTask = state.tasks;
+              final now = DateTime.now();
 
-              final newTasks = state.tasks
-                  .where((task) => task.status == 'new')
+              final name = allTask.isNotEmpty ? allTask.first.name : 'User';
+
+              final newTasks = allTask
+                  .where(
+                    (task) =>
+                        task.status == 'Pending' &&
+                        (DateTime.parse(task.dueDate).isAfter(now) ||
+                            DateUtils.isSameDay(
+                              DateTime.parse(task.dueDate),
+                              now,
+                            )),
+                  )
                   .toList();
 
-              final lateTasks = state.tasks
-                  .where((task) => task.status == 'late')
+              final lateTasks = allTask
+                  .where(
+                    (task) =>
+                        task.status == 'Pending' &&
+                        DateTime.parse(task.dueDate).isBefore(now) &&
+                        !DateUtils.isSameDay(
+                          DateTime.parse(task.dueDate),
+                          now,
+                        ),
+                  )
                   .toList();
 
-              final progressTasks = state.tasks
-                  .where((task) => task.status == 'in_progress')
+              final progressTasks = allTask
+                  .where((task) => task.status == 'Completed')
                   .toList();
 
               return SingleChildScrollView(
@@ -95,7 +110,10 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(34),
 
-                    SectionHeader(title: "Late", count: lateTasks.length),
+                    SectionHeader(
+                      title: "Late",
+                      count: lateTasks.length,
+                    ),
 
                     const Gap(18),
 
@@ -116,14 +134,14 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     const Gap(34),
 
                     SectionHeader(
-                      title: "Progress",
+                      title: "Completed",
                       count: progressTasks.length,
                     ),
 
                     const Gap(18),
 
                     progressTasks.isEmpty
-                        ? const EmptyTasksCard(text: "No progress tasks")
+                        ? const EmptyTasksCard(text: "No completed tasks")
                         : ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

@@ -30,11 +30,7 @@ class ProgressTaskTile extends StatelessWidget {
               ),
             ),
           ),
-          const Icon(
-            Icons.check_box_outline_blank_rounded,
-            color: Color(0xff102A63),
-            size: 26,
-          ),
+          
         ],
       ),
     );

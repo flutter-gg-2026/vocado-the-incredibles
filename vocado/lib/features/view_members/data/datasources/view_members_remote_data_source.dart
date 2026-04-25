@@ -38,7 +38,7 @@ class ViewMembersRemoteDataSource implements BaseViewMembersRemoteDataSource {
         ''')
           .eq('admin_id', adminId);
 
-      print('VIEW MEMBERS RESPONSE: $response');
+    
 
       return response
           .map<ViewMembersModel>((json) => ViewMembersModel.fromJson(json))

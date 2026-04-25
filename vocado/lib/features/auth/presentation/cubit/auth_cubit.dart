@@ -32,7 +32,7 @@ Future<void> checkAuth() async {
         emit(AuthSuccessState(success));
       },
       (whenError) {
-        print(whenError.toString());
+
        emit(AuthErrorState(message: whenError.message));
       },
     );

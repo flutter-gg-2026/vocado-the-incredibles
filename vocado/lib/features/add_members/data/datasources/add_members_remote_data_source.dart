@@ -28,7 +28,6 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
     try {
       final response = await _supabase.from('users').select();
 
-      print('USERS RESPONSE: $response');
 
       return response.map((json) => AddMembersModel.fromJson(json)).toList();
     } catch (error) {
@@ -55,11 +54,11 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
         };
       }).toList();
 
-      final response = await _supabase.from('members').insert(data).select();
+  await _supabase.from('members').insert(data).select();
 
-      print('INSERT RESPONSE: $response');
+  
     } catch (error) {
-      print('INSERT ERROR: $error');
+
       throw FailureExceptions.getException(error);
     }
   }
@@ -71,7 +70,6 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
           .from('members')
           .select('id, user_id, admin_id, due_date');
 
-      print('MEMBERS LIST: $response');
 
       return List<Map<String, dynamic>>.from(response);
     } catch (error) {
@@ -85,7 +83,7 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
     required DateTime dueDate,
   }) async {
     try {
-      final response = await _supabase
+      await _supabase
           .from('members')
           .update({
             'due_date': dueDate.toIso8601String(),
@@ -93,9 +91,9 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
           .eq('id', memberRowId)
           .select();
 
-      print('UPDATE MEMBER RESPONSE: $response');
+   
     } catch (error) {
-      print('UPDATE MEMBER ERROR: $error');
+     
       throw FailureExceptions.getException(error);
     }
   }
