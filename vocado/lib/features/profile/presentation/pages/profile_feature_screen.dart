@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/core/utils/validators.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_state.dart';
 import 'package:gap/gap.dart';
@@ -76,12 +77,14 @@ class ProfileFeatureScreen extends HookWidget {
                       ),
                     ),
                     const Gap(16),
-                    TextField(
+                    TextFormField(
                       controller: nameController,
                       decoration: const InputDecoration(
                         labelText: "Name",
                         border: OutlineInputBorder(),
                       ),
+                      validator: (value) => Validators.validateRequired(value, fieldName: 'Name'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     const Gap(16),
                     Text(
