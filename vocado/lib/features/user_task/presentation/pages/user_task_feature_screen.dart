@@ -33,7 +33,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
               final allTask = state.tasks;
               final now = DateTime.now();
 
-              final name = allTask.isNotEmpty ? allTask.first.name : 'User';
+              final name = allTask.isNotEmpty ? allTask : 'User';
 
               final newTasks = allTask
                   .where(
@@ -75,14 +75,12 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(36),
 
-                    Center(
-                      child: Text(
-                        "Hello, $name",
-                        style: const TextStyle(
-                          color: Color(0xff102A63),
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    Text(
+                      "welcome",
+                      style: const TextStyle(
+                        color: Color(0xff102A63),
+                        fontSize: 29,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
 
