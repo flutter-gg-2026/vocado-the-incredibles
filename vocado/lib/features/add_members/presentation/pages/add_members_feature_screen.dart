@@ -8,7 +8,6 @@ import 'package:vocado/features/add_members/presentation/cubit/add_members_state
 import 'package:vocado/features/add_members/presentation/widgets/empty_card.dart';
 import 'package:vocado/features/add_members/presentation/widgets/header.dart';
 import 'package:vocado/features/add_members/presentation/widgets/member_card.dart';
-import 'package:vocado/features/add_members/presentation/widgets/sreach.dart';
 
 class AddMembersFeatureScreen extends StatelessWidget {
   const AddMembersFeatureScreen({super.key});
@@ -18,8 +17,14 @@ class AddMembersFeatureScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF4F5FB),
       body: SafeArea(
-        child: BlocListener<AddMembersCubit, AddMembersState>(
+        child: BlocConsumer<AddMembersCubit, AddMembersState>(
           listener: (context, state) {
+            if (state is AddMembersErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(state.message)),
+              );
+            }
+
             if (state is AddMembersGroupCreatedState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -27,117 +32,111 @@ class AddMembersFeatureScreen extends StatelessWidget {
                 ),
               );
 
-              if (Navigator.canPop(context)) {
-                Navigator.pop(context);
-              }
+              context.go(Routes.adminDashboard);
             }
           },
-          child: BlocBuilder<AddMembersCubit, AddMembersState>(
-            builder: (context, state) {
-              if (state is AddMembersLoadingState) {
-                return const Center(child: CircularProgressIndicator());
-              }
+          builder: (context, state) {
+            if (state is AddMembersLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-              if (state is AddMembersErrorState) {
-                return Center(child: Text(state.message));
-              }
+            if (state is AddMembersErrorState) {
+              return Center(child: Text(state.message));
+            }
 
-              if (state is AddMembersSuccessState) {
-                final members = state.members;
-                final cubit = context.read<AddMembersCubit>();
+            if (state is AddMembersSuccessState) {
+              final members = state.members;
+              final cubit = context.read<AddMembersCubit>();
 
-                return Padding(
-                  padding: const EdgeInsets.all(22),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Header(),
-                      const Gap(24),
-                      const Text(
-                        "Add members to your group",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                          color: Color(0xff24224A),
-                        ),
+              return Padding(
+                padding: const EdgeInsets.all(22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Header(),
+                    const Gap(24),
+                    const Text(
+                      "Add members to your group",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xff24224A),
                       ),
-                      const Gap(24),
-                 
-                      const Gap(24),
-                      const Text(
-                        "Members",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                          color: Color(0xff24224A),
-                        ),
+                    ),
+                    const Gap(24),
+                    const Text(
+                      "Members",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xff24224A),
                       ),
-                      const Gap(14),
-                      Expanded(
-                        child: members.isEmpty
-                            ? const EmptyCard()
-                            : ListView.separated(
-                                itemCount: members.length,
-                                separatorBuilder: (context, index) =>
-                                    const Gap(12),
-                                itemBuilder: (context, index) {
-                                  final member = members[index];
-                                  final isSelected =
-                                      cubit.selectedMembers.contains(member);
+                    ),
+                    const Gap(14),
+                    Expanded(
+                      child: members.isEmpty
+                          ? const EmptyCard()
+                          : ListView.separated(
+                              itemCount: members.length,
+                              separatorBuilder: (context, index) =>
+                                  const Gap(12),
+                              itemBuilder: (context, index) {
+                                final member = members[index];
+                                final isSelected =
+                                    cubit.selectedMembers.contains(member);
 
-                                  return Material(
-                                    color: Colors.transparent,
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(22),
-                                      onTap: () {
-                                        print('TAPPED MEMBER: ${member.name}');
-                                        cubit.toggleMember(member);
-                                      },
-                                      child: MemberCard(
-                                        member: member,
-                                        isSelected: isSelected,
-                                      ),
+                                return Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(22),
+                                    onTap: () {
+                                      cubit.toggleMember(member);
+                                    },
+                                    child: MemberCard(
+                                      member: member,
+                                      isSelected: isSelected,
                                     ),
-                                  );
-                                },
-                              ),
-                      ),
-                      const Gap(24),
-                      SizedBox(
-                        height: 58,
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff3D35A6),
-                            foregroundColor: Colors.white,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
+                                  ),
+                                );
+                              },
                             ),
+                    ),
+                    const Gap(24),
+                    SizedBox(
+                      height: 58,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff3D35A6),
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
                           ),
-                          onPressed: () {
-                            context
-                                .read<AddMembersCubit>()
-                                .confirmMembers();
-                                context.go(Routes.adminDashboard);
-                          },
-                          child: const Text(
-                            "Confirm Members",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
-                              fontSize: 16,
-                            ),
+                        ),
+                        onPressed: () {
+                          context.read<AddMembersCubit>().confirmMembers();
+                        },
+                        child: const Text(
+                          "Confirm Members",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 16,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                );
-              }
+                    ),
+                  ],
+                ),
+              );
+            }
 
-              return const SizedBox();
-            },
-          ),
+            if (state is AddMembersGroupCreatedState) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return const SizedBox();
+          },
         ),
       ),
     );

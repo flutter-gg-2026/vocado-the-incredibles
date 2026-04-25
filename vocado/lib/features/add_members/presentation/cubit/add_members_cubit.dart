@@ -29,38 +29,42 @@ class AddMembersCubit extends Cubit<AddMembersState> {
     );
   }
 
-  void toggleMember(AddMembersEntity member) {
-    if (selectedMembers.contains(member)) {
-      selectedMembers.remove(member);
-    } else {
-      selectedMembers.add(member);
-    }
-
-    print('SELECTED: ${selectedMembers.map((e) => e.name).toList()}');
-
-    if (state is AddMembersSuccessState) {
-      final currentState = state as AddMembersSuccessState;
-
-      emit(AddMembersLoadingState());
-      emit(AddMembersSuccessState(currentState.members));
-    }
+ void toggleMember(AddMembersEntity member) {
+  if (selectedMembers.contains(member)) {
+    selectedMembers.remove(member);
+  } else {
+    selectedMembers.add(member);
   }
+
+  print('SELECTED: ${selectedMembers.map((e) => e.name).toList()}');
+
+  if (state is AddMembersSuccessState) {
+    final currentState = state as AddMembersSuccessState;
+
+    emit(AddMembersLoadingState());
+    emit(AddMembersSuccessState(currentState.members));
+  }
+}
 
   Future<void> confirmMembers() async {
     if (selectedMembers.isEmpty) {
-      print('NO MEMBERS SELECTED');
+      emit(const AddMembersErrorState('Please select at least one member'));
       return;
     }
+
+    emit(AddMembersCreatingState());
 
     final ids = selectedMembers.map((e) => e.id).toList();
 
     final result = await _addMembersUseCase.createGroupMembers(ids);
 
     result.when(
-      (_) {
-        print('GROUP CREATED');
+      (_) async {
         selectedMembers.clear();
+
         emit(AddMembersGroupCreatedState());
+
+        await getAddMembersMethod();
       },
       (failure) {
         emit(AddMembersErrorState(failure.message));

@@ -33,4 +33,31 @@ class AddMembersRepository implements AddMembersRepositoryDomain {
       return Error(FailureExceptions.getException(error));
     }
   }
+
+  @override
+  Future<Result<List<Map<String, dynamic>>, Failure>> getMembersList() async {
+    try {
+      final result = await _remoteDataSource.getMembersList();
+      return Success(result);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> updateGroupMember({
+    required String memberRowId,
+    required DateTime dueDate,
+  }) async {
+    try {
+      await _remoteDataSource.updateGroupMember(
+        memberRowId: memberRowId,
+        dueDate: dueDate,
+      );
+
+      return const Success(null);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
 }

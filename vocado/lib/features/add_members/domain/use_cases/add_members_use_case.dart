@@ -17,4 +17,18 @@ class AddMembersUseCase {
   Future<Result<void, Failure>> createGroupMembers(List<String> userIds) {
     return _repositoryData.createGroupMembers(userIds);
   }
+
+  Future<Result<List<Map<String, dynamic>>, Failure>> getMembersList() {
+    return _repositoryData.getMembersList();
+  }
+
+  Future<Result<void, Failure>> updateGroupMember({
+    required String memberRowId,
+    required DateTime dueDate,
+  }) {
+    return _repositoryData.updateGroupMember(
+      memberRowId: memberRowId,
+      dueDate: dueDate,
+    );
+  }
 }

@@ -12,6 +12,8 @@ class AddMembersInitialState extends AddMembersState {}
 
 class AddMembersLoadingState extends AddMembersState {}
 
+class AddMembersCreatingState extends AddMembersState {} 
+
 class AddMembersSuccessState extends AddMembersState {
   final List<AddMembersEntity> members;
 

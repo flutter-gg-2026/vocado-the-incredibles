@@ -6,15 +6,22 @@ import 'package:vocado/features/add_members/data/models/add_members_model.dart';
 
 abstract class BaseAddMembersRemoteDataSource {
   Future<List<AddMembersModel>> getAddMembers();
+
   Future<void> createGroupMembers(List<String> userIds);
+
+  Future<List<Map<String, dynamic>>> getMembersList();
+
+  Future<void> updateGroupMember({
+    required String memberRowId,
+    required DateTime dueDate,
+  });
 }
 
 @LazySingleton(as: BaseAddMembersRemoteDataSource)
 class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
-  final LocalKeysService _localKeysService;
   final SupabaseClient _supabase;
 
-  AddMembersRemoteDataSource(this._localKeysService, this._supabase);
+  AddMembersRemoteDataSource( this._supabase);
 
   @override
   Future<List<AddMembersModel>> getAddMembers() async {
@@ -38,11 +45,7 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
         throw Exception('No logged in user');
       }
 
-      final adminId = user.id; 
-
-      if (adminId.isEmpty || adminId == 'user_id') {
-        throw Exception('adminId is not valid UUID: $adminId');
-      }
+      final adminId = user.id;
 
       final data = userIds.map((userId) {
         return {
@@ -52,13 +55,47 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
         };
       }).toList();
 
-      print('INSERT DATA: $data');
-
       final response = await _supabase.from('members').insert(data).select();
 
       print('INSERT RESPONSE: $response');
     } catch (error) {
       print('INSERT ERROR: $error');
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getMembersList() async {
+    try {
+      final response = await _supabase
+          .from('members')
+          .select('id, user_id, admin_id, due_date');
+
+      print('MEMBERS LIST: $response');
+
+      return List<Map<String, dynamic>>.from(response);
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> updateGroupMember({
+    required String memberRowId,
+    required DateTime dueDate,
+  }) async {
+    try {
+      final response = await _supabase
+          .from('members')
+          .update({
+            'due_date': dueDate.toIso8601String(),
+          })
+          .eq('id', memberRowId)
+          .select();
+
+      print('UPDATE MEMBER RESPONSE: $response');
+    } catch (error) {
+      print('UPDATE MEMBER ERROR: $error');
       throw FailureExceptions.getException(error);
     }
   }
