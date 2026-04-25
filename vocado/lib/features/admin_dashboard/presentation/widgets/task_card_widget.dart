@@ -21,19 +21,20 @@ class TaskCardWidget extends StatelessWidget {
                 crossAxisAlignment: .start,
                 children: [
                   Text(
-                    'Task ${task.id.substring(task.id.lastIndexOf('-') + 1)}',
+                    'Task: ${task.task}',
                     style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    task.task,
-                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Row(
                     mainAxisSize: .min,
                     spacing: 5,
                     children: [
                       Icon(Icons.watch_later, size: 20),
-                      Text(Formatters.formatDateTime(task.dueDate)),
+                      Text(
+                        Formatters.formatDate(task.dueDate),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                     ],
                   ),
                   Row(
@@ -41,27 +42,23 @@ class TaskCardWidget extends StatelessWidget {
                     spacing: 5,
                     children: [
                       Icon(Icons.person_outline, size: 20),
-                      Text(task.assignee),
+                      Expanded(
+                        child: Text(
+                          task.assignee,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        'Assigned at: ${Formatters.formatDateTime(task.createdAt)}',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                     ],
                   ),
                 ],
-              ),
-            ),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return SizedBox(
-                    height: constraints.minHeight,
-                    child: Align(
-                      alignment: .bottomEnd,
-                      child: CircleAvatar(
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.onSecondary,
-                      ),
-                    ),
-                  );
-                },
               ),
             ),
           ],

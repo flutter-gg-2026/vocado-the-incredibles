@@ -10,9 +10,11 @@ abstract class AdminDashboardModel with _$AdminDashboardModel {
   const factory AdminDashboardModel({
     required String id,
     required String task,
+    @JsonKey(name: 'name')
     String? assignee,
     required String assigneeId,
     required DateTime dueDate,
+    required DateTime createdAt,
     required bool completed,
   }) = _AdminDashboardModel;
 
@@ -28,7 +30,8 @@ extension AdminDashboardModelMapper on AdminDashboardModel {
       assignee: assignee ?? 'Hatem',
       assigneeId: assigneeId,
       dueDate: dueDate,
-      completed: completed,
+      completed: completed, 
+      createdAt: createdAt,
     );
   }
 }
