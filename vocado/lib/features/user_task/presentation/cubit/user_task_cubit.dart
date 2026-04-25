@@ -27,24 +27,33 @@ class UserTaskCubit extends Cubit<UserTaskState> {
     );
   }
 
-  void markTaskAsDone(String taskId) {
-    final currentState = state;
+  Future<void> markTaskAsDone(String taskId) async {
+  final currentState = state;
 
-    if (currentState is UserTaskSuccessState) {
-      final updatedTasks = currentState.tasks.map((task) {
-        if (task.id == taskId) {
-          return UserTaskEntity(
-            id: task.id,
-            title: task.title,
-            status: 'Completed',
-            dueDate: task.dueDate,
-            name: task.name,
-          );
-        }
-        return task;
-      }).toList();
+  if (currentState is UserTaskSuccessState) {
+    final result = await _userTaskUseCase.markTaskDone(taskId);
 
-      emit(UserTaskSuccessState(updatedTasks));
-    }
+    result.when(
+      (_) {
+        final updatedTasks = currentState.tasks.map((task) {
+          if (task.id == taskId) {
+            return UserTaskEntity(
+              id: task.id,
+              title: task.title,
+              status: 'Completed',
+              dueDate: task.dueDate,
+              name: task.name,
+            );
+          }
+          return task;
+        }).toList();
+
+        emit(UserTaskSuccessState(updatedTasks));
+      },
+      (failure) {
+        emit(UserTaskErrorState(failure.message));
+      },
+    );
   }
+}
 }

@@ -23,7 +23,7 @@ class AddedMembersBox extends StatelessWidget {
         color: const Color(0xffEAF0FF),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0xff3D35A6).withOpacity(0.15),
+          color: const Color(0xff3D35A6).withValues(alpha: .15),
         ),
       ),
       child: Column(

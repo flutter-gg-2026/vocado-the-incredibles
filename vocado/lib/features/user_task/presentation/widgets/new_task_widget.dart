@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vocado/features/user_task/domain/entities/user_task_entity.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_cubit.dart';
 
 class NewTaskCard extends StatelessWidget {
   final UserTaskEntity task;
 
-  const NewTaskCard({
-    super.key,
-    required this.task,
-  });
+  const NewTaskCard({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +22,7 @@ class NewTaskCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+     
           Text(
             task.title,
             maxLines: 3,
@@ -35,30 +34,29 @@ class NewTaskCard extends StatelessWidget {
               fontWeight: FontWeight.w900,
             ),
           ),
+
           const Gap(12),
+
+  
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
-                Icons.flag,
-                color: Colors.white70,
-                size: 18,
-              ),
+              const Icon(Icons.flag, color: Colors.white70, size: 18),
               const Gap(6),
               Expanded(
                 child: Text(
                   task.dueDate,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 13,
-                  ),
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
                 ),
               ),
             ],
           ),
+
           const Spacer(),
+
+
           PopupMenuButton<String>(
             color: const Color(0xff8F9497),
             shape: RoundedRectangleBorder(
@@ -66,19 +64,52 @@ class NewTaskCard extends StatelessWidget {
             ),
             onSelected: (value) {
               if (value == 'done') {
-                context.read<UserTaskCubit>().markTaskAsDone(task.id);
+                final cubit = context.read<UserTaskCubit>(); 
+
+                showDialog(
+                  context: context,
+                  builder: (dialogContext) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      title: const Text("Confirm"),
+                      content: const Text(
+                        "Are you sure you want to mark this task as done?",
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.pop(dialogContext);
+                          },
+                          child: const Text("Cancel"),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xff2A58E8),
+                          ),
+                          onPressed: () {
+                            context.pop(dialogContext);
+                            cubit.markTaskAsDone(task.id);
+                
+                          },
+                          child: const Text("Yes"),
+                        ),
+                      ],
+                    );
+                  },
+                );
               }
             },
+
+
             itemBuilder: (context) => const [
               PopupMenuItem(
                 value: 'in_progress',
                 child: Center(
                   child: Text(
                     'in progress',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
@@ -87,19 +118,18 @@ class NewTaskCard extends StatelessWidget {
                 child: Center(
                   child: Text(
                     'Done',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
             ],
+
+
             child: Container(
               height: 34,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(.25),
+                color: Colors.white.withValues(alpha: .25),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Row(
@@ -107,10 +137,7 @@ class NewTaskCard extends StatelessWidget {
                 children: [
                   Text(
                     "select a task status",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                   Gap(6),
                   Icon(
