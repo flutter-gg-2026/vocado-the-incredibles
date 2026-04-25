@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vocado/core/utils/formatters.dart';
 import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_entity.dart';
+import 'package:vocado/features/admin_dashboard/presentation/widgets/confirm_delete_widget.dart';
 
 class TaskCardWidget extends StatelessWidget {
   final AdminDashboardEntity task;
@@ -14,31 +15,11 @@ class TaskCardWidget extends StatelessWidget {
       key: Key(task.id),
       background: Container(
         color: Colors.redAccent,
-        child: Text('Cancel Task'),
+        child: Align(alignment: .centerEnd, child: Text('Cancel Task')),
       ),
       confirmDismiss: (direction) async => await showDialog(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Task Delete'),
-          content: Text(
-            "You're about to delete the task for the member.\nDo you want to confirm ?",
-          ),
-          actions: [
-            TextButton(
-              style: ButtonStyle(foregroundColor: .all(Colors.redAccent)),
-              child: const Text('Cancel'),
-              onPressed: () {
-                context.pop(false);
-              },
-            ),
-            TextButton(
-              child: const Text('Confirm'),
-              onPressed: () {
-                context.pop(true);
-              },
-            ),
-          ],
-        ),
+        builder: (context) => ConfirmDeleteWidget(),
       ),
       onDismissed: (direction) => onDelete,
       child: Card(
