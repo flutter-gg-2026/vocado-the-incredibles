@@ -11,6 +11,7 @@ part of 'view_members_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
+
 /// @nodoc
 mixin _$ViewMembersModel {
 
@@ -21,6 +22,8 @@ mixin _$ViewMembersModel {
 @pragma('vm:prefer-inline')
 $ViewMembersModelCopyWith<ViewMembersModel> get copyWith => _$ViewMembersModelCopyWithImpl<ViewMembersModel>(this as ViewMembersModel, _$identity);
 
+  /// Serializes this ViewMembersModel to a JSON map.
+  Map<String, dynamic> toJson();
 
 
 @override
@@ -28,7 +31,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is ViewMembersModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,email,role);
 
@@ -206,11 +209,11 @@ return $default(_that.id,_that.name,_that.email,_that.role);case _:
 }
 
 /// @nodoc
-
+@JsonSerializable()
 
 class _ViewMembersModel implements ViewMembersModel {
   const _ViewMembersModel({required this.id, required this.name, required this.email, required this.role});
-  
+  factory _ViewMembersModel.fromJson(Map<String, dynamic> json) => _$ViewMembersModelFromJson(json);
 
 @override final  String id;
 @override final  String name;
@@ -223,14 +226,17 @@ class _ViewMembersModel implements ViewMembersModel {
 @pragma('vm:prefer-inline')
 _$ViewMembersModelCopyWith<_ViewMembersModel> get copyWith => __$ViewMembersModelCopyWithImpl<_ViewMembersModel>(this, _$identity);
 
-
+@override
+Map<String, dynamic> toJson() {
+  return _$ViewMembersModelToJson(this, );
+}
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewMembersModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
-
+@JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode => Object.hash(runtimeType,id,name,email,role);
 
