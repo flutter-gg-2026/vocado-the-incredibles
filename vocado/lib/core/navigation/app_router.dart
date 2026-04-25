@@ -63,9 +63,11 @@ class AppRouter {
             ],
           ),
 
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
+    
+        ],
+      ),
+    
+     GoRoute(
                 path: Routes.profile,
                 redirect: (context, state) {
                   final serviceUser = getIt<ServiceUser>();
@@ -77,11 +79,6 @@ class AppRouter {
                   child: const ProfileFeatureScreen(),
                 ),
               ),
-            ],
-          ),
-        ],
-      ),
-
       GoRoute(
         path: Routes.userTask,
         builder: (context, state) => BlocProvider(
