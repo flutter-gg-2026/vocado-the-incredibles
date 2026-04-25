@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/services/google_gemini.dart';
+import 'package:vocado/core/services/serviceUser.dart';
 import 'package:vocado/core/services/speech_to_text.dart';
 import 'package:vocado/features/task_create/data/models/task_create_model.dart';
 import 'package:vocado/features/task_create/domain/entities/task_create_entity.dart';
@@ -17,11 +18,13 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
   final SupabaseClient _supabase;
   final SpeechToText _speechToText;
   final GoogleGemini _googleGemini;
+  final ServiceUser _serviceUser;
 
   TaskCreateRemoteDataSource(
     this._supabase,
     this._googleGemini,
     this._speechToText,
+    this._serviceUser
   );
 
   @override
@@ -53,7 +56,7 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
     await _supabase.from('tasks').insert({
       "task": newTask.task,
       "assignee_id": '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb',
-      "assigned_by": "27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb",
+      "assigned_by": _serviceUser.currentUser!.id,
       "due_date": newTask.dueDate.toIso8601String(),
     });
   }

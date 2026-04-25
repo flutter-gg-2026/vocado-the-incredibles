@@ -8,10 +8,13 @@ import 'package:vocado/features/task_create/presentation/pages/task_create_featu
 import 'package:vocado/features/task_create/presentation/cubit/task_create_cubit.dart';
 import 'package:vocado/features/admin_dashboard/presentation/pages/admin_dashboard_feature_screen.dart';
 import 'package:vocado/features/admin_dashboard/presentation/cubit/admin_dashboard_cubit.dart';
+import 'package:vocado/features/auth/presentation/pages/auth_feature_screen.dart';
+import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskCreate,
+    initialLocation: Routes.auth,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -50,7 +53,15 @@ class AppRouter {
           ),
         ],
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.auth,
+    builder: (context, state) => BlocProvider(
+          create: (context) => AuthCubit(GetIt.I.get()),
+          child: const AuthFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
