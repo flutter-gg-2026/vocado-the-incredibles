@@ -8,7 +8,7 @@ class SectionHeader extends StatelessWidget {
   final int? count;
   final Color? countColor;
   final Color countTextColor;
-  final VoidCallback? onViewAllTap;
+
 
   const SectionHeader({
     super.key,
@@ -17,7 +17,7 @@ class SectionHeader extends StatelessWidget {
     this.count,
     this.countColor,
     this.countTextColor = Colors.white,
-    this.onViewAllTap,
+
   });
 
   @override
@@ -56,17 +56,9 @@ class SectionHeader extends StatelessWidget {
           ),
         ],
         const Spacer(),
-        GestureDetector(
-          onTap: onViewAllTap,
-          child: const Text(
-            "View all",
-            style: TextStyle(
-              color: Color(0xff102A63),
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
+       
+  
+        
       ],
     );
   }

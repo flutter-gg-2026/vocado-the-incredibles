@@ -21,15 +21,19 @@ class UserTaskRemoteDataSource implements BaseUserTaskRemoteDataSource {
       if (userId == null) {
         return [];
       }
-
       final response = await _supabase
           .from('tasks')
-          .select()
+          .select('''
+      id,
+      task,
+      completed,
+      due_date,
+      user:users!tasks_assignee_id_fkey(
+        name
+      )
+    ''')
           .eq('assignee_id', userId);
-
-      return response
-          .map((json) => UserTaskModel.fromJson(json))
-          .toList();
+      return response.map((json) => UserTaskModel.fromJson(json)).toList();
     } catch (error) {
       throw FailureExceptions.getException(error);
     }

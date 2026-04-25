@@ -18,9 +18,12 @@ import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vocado/features/auth/presentation/pages/auth_feature_screen.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:vocado/features/view_members/presentation/pages/view_members_feature_screen.dart';
+import 'package:vocado/features/view_members/presentation/cubit/view_members_cubit.dart';
+
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.userTask,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -98,7 +101,15 @@ class AppRouter {
           ),
         ],
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.viewMembers,
+    builder: (context, state) => BlocProvider(
+          create: (context) => ViewMembersCubit(GetIt.I.get()),
+          child: const ViewMembersFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

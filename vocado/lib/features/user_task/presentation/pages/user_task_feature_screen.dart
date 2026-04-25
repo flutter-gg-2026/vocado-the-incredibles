@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:vocado/core/navigation/routers.dart';
-import 'package:vocado/features/user_task/domain/entities/user_task_entity.dart';
+import 'package:injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_cubit.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_state.dart';
 import 'package:vocado/features/user_task/presentation/widgets/empty_tasks_card.dart';
@@ -32,6 +31,10 @@ class UserTaskFeatureScreen extends StatelessWidget {
             }
 
             if (state is UserTaskSuccessState) {
+              final name = state.tasks.isNotEmpty
+                  ? state.tasks.first.name
+                  : 'User';
+
               final newTasks = state.tasks
                   .where((task) => task.status == 'new')
                   .toList();
@@ -56,10 +59,10 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(36),
 
-                    const Center(
+                    Center(
                       child: Text(
-                        "Hello, Rasha",
-                        style: TextStyle(
+                        "Hello, $name",
+                        style: const TextStyle(
                           color: Color(0xff102A63),
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
@@ -68,17 +71,10 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     ),
 
                     const Gap(34),
+
                     SectionHeader(
                       title: "${newTasks.length} New",
                       subtitle: "tasks today",
-                      onViewAllTap: () {
-                        //!-------------------------
-                        // context.push(
-
-                        //   // Routes.
-                        //   // extra: {'title': 'New Tasks', 'tasks': newTasks},
-                        // );
-                      },
                     ),
 
                     const Gap(18),
@@ -98,17 +94,9 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     ),
 
                     const Gap(34),
-                    SectionHeader(
-                      title: "Late",
-                      count: lateTasks.length,
-                      onViewAllTap: () {
-                        //!-----------------------------
-                        // context.push(
-                        //   Routes.allTasks,
-                        //   extra: {'title': 'Late Tasks', 'tasks': lateTasks},
-                        // );
-                      },
-                    ),
+
+                    SectionHeader(title: "Late", count: lateTasks.length),
+
                     const Gap(18),
 
                     SizedBox(
@@ -128,17 +116,10 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     const Gap(34),
 
                     SectionHeader(
-                      title: "Late",
-                      count: lateTasks.length,
-                      onViewAllTap: () {
-
-                        //!--------------------------
-                        // context.push(
-                        //   Routes.allTasks,
-                        //   extra: {'title': 'Late Tasks', 'tasks': lateTasks},
-                        // );
-                      },
+                      title: "Progress",
+                      count: progressTasks.length,
                     ),
+
                     const Gap(18),
 
                     progressTasks.isEmpty

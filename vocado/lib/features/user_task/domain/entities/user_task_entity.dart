@@ -5,12 +5,13 @@ class UserTaskEntity extends Equatable {
   final String title;
   final String status;
   final String dueDate;
+    final String name; 
 
   const UserTaskEntity({
     required this.id,
     required this.title,
     required this.status,
-    required this.dueDate,
+    required this.dueDate, required this.name,
   });
 
   @override

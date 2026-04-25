@@ -12,6 +12,7 @@ _UserTaskModel _$UserTaskModelFromJson(Map<String, dynamic> json) =>
       title: json['task'] as String,
       status: json['completed'] as bool,
       dueDate: DateTime.parse(json['due_date'] as String),
+      name: json['name'] as String,
     );
 
 Map<String, dynamic> _$UserTaskModelToJson(_UserTaskModel instance) =>
@@ -20,4 +21,5 @@ Map<String, dynamic> _$UserTaskModelToJson(_UserTaskModel instance) =>
       'task': instance.title,
       'completed': instance.status,
       'due_date': instance.dueDate.toIso8601String(),
+      'name': instance.name,
     };

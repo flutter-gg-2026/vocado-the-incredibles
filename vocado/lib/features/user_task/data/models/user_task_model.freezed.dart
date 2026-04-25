@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserTaskModel {
 
- String get id;@JsonKey(name: 'task') String get title;@JsonKey(name: 'completed') bool get status;@JsonKey(name: 'due_date') DateTime get dueDate;
+ String get id;@JsonKey(name: 'task') String get title;@JsonKey(name: 'completed') bool get status;@JsonKey(name: 'due_date') DateTime get dueDate; String get name;
 /// Create a copy of UserTaskModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserTaskModelCopyWith<UserTaskModel> get copyWith => _$UserTaskModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,status,dueDate);
+int get hashCode => Object.hash(runtimeType,id,title,status,dueDate,name);
 
 @override
 String toString() {
-  return 'UserTaskModel(id: $id, title: $title, status: $status, dueDate: $dueDate)';
+  return 'UserTaskModel(id: $id, title: $title, status: $status, dueDate: $dueDate, name: $name)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserTaskModelCopyWith<$Res>  {
   factory $UserTaskModelCopyWith(UserTaskModel value, $Res Function(UserTaskModel) _then) = _$UserTaskModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'task') String title,@JsonKey(name: 'completed') bool status,@JsonKey(name: 'due_date') DateTime dueDate
+ String id,@JsonKey(name: 'task') String title,@JsonKey(name: 'completed') bool status,@JsonKey(name: 'due_date') DateTime dueDate, String name
 });
 
 
@@ -65,13 +65,14 @@ class _$UserTaskModelCopyWithImpl<$Res>
 
 /// Create a copy of UserTaskModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? status = null,Object? dueDate = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? status = null,Object? dueDate = null,Object? name = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as bool,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserTaskModel() when $default != null:
-return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
+return $default(_that.id,_that.title,_that.status,_that.dueDate,_that.name);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate,  String name)  $default,) {final _that = this;
 switch (_that) {
 case _UserTaskModel():
-return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
+return $default(_that.id,_that.title,_that.status,_that.dueDate,_that.name);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'task')  String title, @JsonKey(name: 'completed')  bool status, @JsonKey(name: 'due_date')  DateTime dueDate,  String name)?  $default,) {final _that = this;
 switch (_that) {
 case _UserTaskModel() when $default != null:
-return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
+return $default(_that.id,_that.title,_that.status,_that.dueDate,_that.name);case _:
   return null;
 
 }
@@ -212,13 +213,14 @@ return $default(_that.id,_that.title,_that.status,_that.dueDate);case _:
 @JsonSerializable()
 
 class _UserTaskModel implements UserTaskModel {
-  const _UserTaskModel({required this.id, @JsonKey(name: 'task') required this.title, @JsonKey(name: 'completed') required this.status, @JsonKey(name: 'due_date') required this.dueDate});
+  const _UserTaskModel({required this.id, @JsonKey(name: 'task') required this.title, @JsonKey(name: 'completed') required this.status, @JsonKey(name: 'due_date') required this.dueDate, required this.name});
   factory _UserTaskModel.fromJson(Map<String, dynamic> json) => _$UserTaskModelFromJson(json);
 
 @override final  String id;
 @override@JsonKey(name: 'task') final  String title;
 @override@JsonKey(name: 'completed') final  bool status;
 @override@JsonKey(name: 'due_date') final  DateTime dueDate;
+@override final  String name;
 
 /// Create a copy of UserTaskModel
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.name, name) || other.name == name));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,status,dueDate);
+int get hashCode => Object.hash(runtimeType,id,title,status,dueDate,name);
 
 @override
 String toString() {
-  return 'UserTaskModel(id: $id, title: $title, status: $status, dueDate: $dueDate)';
+  return 'UserTaskModel(id: $id, title: $title, status: $status, dueDate: $dueDate, name: $name)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$UserTaskModelCopyWith<$Res> implements $UserTaskModelCopy
   factory _$UserTaskModelCopyWith(_UserTaskModel value, $Res Function(_UserTaskModel) _then) = __$UserTaskModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'task') String title,@JsonKey(name: 'completed') bool status,@JsonKey(name: 'due_date') DateTime dueDate
+ String id,@JsonKey(name: 'task') String title,@JsonKey(name: 'completed') bool status,@JsonKey(name: 'due_date') DateTime dueDate, String name
 });
 
 
@@ -270,13 +272,14 @@ class __$UserTaskModelCopyWithImpl<$Res>
 
 /// Create a copy of UserTaskModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? status = null,Object? dueDate = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? status = null,Object? dueDate = null,Object? name = null,}) {
   return _then(_UserTaskModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as bool,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
-as DateTime,
+as DateTime,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
