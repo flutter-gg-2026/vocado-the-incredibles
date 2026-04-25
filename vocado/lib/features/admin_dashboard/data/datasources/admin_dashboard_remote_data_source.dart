@@ -17,7 +17,6 @@ class AdminDashboardRemoteDataSource
 
   @override
   Future<List<AdminDashboardModel>> getAdminDashboard() async {
-    await Future.delayed(Duration(seconds: 2));
     final response = await _supabase
         .from('tasks')
         .select('*, users!assignee_id(name)')

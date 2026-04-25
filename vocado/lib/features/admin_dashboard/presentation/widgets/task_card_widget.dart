@@ -10,7 +10,7 @@ class TaskCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: .antiAlias,
-      color: Theme.of(context).colorScheme.secondary,
+      color: Theme.of(context).colorScheme.secondaryContainer,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -20,9 +20,22 @@ class TaskCardWidget extends StatelessWidget {
                 spacing: 10,
                 crossAxisAlignment: .start,
                 children: [
-                  Text(
-                    'Task: ${task.task}',
-                    style: Theme.of(context).textTheme.titleLarge,
+                  Row(
+                    mainAxisAlignment: .spaceBetween,
+                    children: [
+                      Text(
+                        'Task: ${task.task}',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Icon(
+                        task.completed
+                            ? Icons.done
+                            : Icons.incomplete_circle_outlined,
+                        color: task.completed
+                            ? Colors.green
+                            : Colors.orangeAccent,
+                      ),
+                    ],
                   ),
                   Row(
                     mainAxisSize: .min,
