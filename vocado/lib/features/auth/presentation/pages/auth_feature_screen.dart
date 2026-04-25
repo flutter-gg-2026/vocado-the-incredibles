@@ -163,14 +163,6 @@ class AuthFeatureScreen extends HookWidget {
 
                     IconButton(
                       onPressed: () {
-                        context.read<AuthCubit>().logOutMethod();
-                      },
-                      icon: Icon(Icons.logout),
-                    ),
-                  Gap(16),
-
-                    IconButton(
-                      onPressed: () {
                         context.push(Routes.profile);
                       },
                       icon: Icon(Icons.square, size: 30,),
