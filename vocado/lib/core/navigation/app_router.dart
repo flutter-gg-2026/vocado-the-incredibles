@@ -17,21 +17,13 @@ import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskCreate,
+    initialLocation: Routes.adminDashboard,
     routes: [
       GoRoute(
         path: Routes.splash,
         builder: (context, state) {
           return Scaffold(body: Center(child: Text("splash screen")));
         }, // SplashScreen
-      ),
-
-      GoRoute(
-        path: Routes.addMembers,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AddMembersCubit(GetIt.I.get()),
-          child: const AddMembersFeatureScreen(),
-        ),
       ),
 
       GoRoute(
@@ -66,6 +58,17 @@ class AppRouter {
             ],
           ),
 
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.addMembers,
+                builder: (context, state) => BlocProvider(
+                  create: (context) => AddMembersCubit(GetIt.I.get()),
+                  child: const AddMembersFeatureScreen(),
+                ),
+              ),
+            ],
+          ),
           StatefulShellBranch(
             routes: [
               GoRoute(

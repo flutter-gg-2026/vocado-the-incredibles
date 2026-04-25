@@ -1,33 +1,33 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
 import 'package:vocado/features/add_members/domain/use_cases/add_members_use_case.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_state.dart';
 
+@injectable
 class AddMembersCubit extends Cubit<AddMembersState> {
   final AddMembersUseCase _addMembersUseCase;
 
   final List<AddMembersEntity> selectedMembers = [];
 
-  AddMembersCubit(this._addMembersUseCase)
-      : super(AddMembersInitialState()){
-        getAddMembersMethod();
-      }
+  AddMembersCubit(this._addMembersUseCase) : super(AddMembersInitialState()) {
+    getAddMembersMethod();
+  }
 
   Future<void> getAddMembersMethod() async {
-    emit(AddMembersLoadingState()); 
+    emit(AddMembersLoadingState());
 
     final result = await _addMembersUseCase.getAddMembers();
 
     result.when(
-      (success) {
-        emit(AddMembersSuccessState(success)); 
+      (members) {
+        emit(AddMembersSuccessState(members));
       },
-      (whenError) {
-        emit(AddMembersErrorState(whenError.message)); 
+      (failure) {
+        emit(AddMembersErrorState(failure.message));
       },
     );
   }
-
 
   void toggleMember(AddMembersEntity member) {
     if (selectedMembers.contains(member)) {
@@ -39,12 +39,13 @@ class AddMembersCubit extends Cubit<AddMembersState> {
     print('SELECTED: ${selectedMembers.map((e) => e.name).toList()}');
 
     if (state is AddMembersSuccessState) {
-      final current = state as AddMembersSuccessState;
-      emit(AddMembersSuccessState(current.members)); 
+      final currentState = state as AddMembersSuccessState;
+
+      emit(AddMembersLoadingState());
+      emit(AddMembersSuccessState(currentState.members));
     }
   }
 
-  /// confirm group
   Future<void> confirmMembers() async {
     if (selectedMembers.isEmpty) {
       print('NO MEMBERS SELECTED');
@@ -59,17 +60,11 @@ class AddMembersCubit extends Cubit<AddMembersState> {
       (_) {
         print('GROUP CREATED');
         selectedMembers.clear();
-        emit(AddMembersGroupCreatedState()); // 👈 important
+        emit(AddMembersGroupCreatedState());
       },
-      (error) {
-        emit(AddMembersErrorState(error.message));
+      (failure) {
+        emit(AddMembersErrorState(failure.message));
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    print('Cubit closed');
-    return super.close();
   }
 }

@@ -12,13 +12,12 @@ class AddMembersRepository implements AddMembersRepositoryDomain {
   final BaseAddMembersRemoteDataSource _remoteDataSource;
 
   AddMembersRepository(this._remoteDataSource);
+
   @override
   Future<Result<List<AddMembersEntity>, Failure>> getAddMembers() async {
     try {
       final result = await _remoteDataSource.getAddMembers();
-
       final entities = result.map((e) => e.toEntity()).toList();
-
       return Success(entities);
     } catch (error) {
       return Error(FailureExceptions.getException(error));
@@ -26,13 +25,12 @@ class AddMembersRepository implements AddMembersRepositoryDomain {
   }
 
   @override
-Future<Result<void, Failure>> createGroupMembers(List<String> userIds) async {
-  try {
-    await _remoteDataSource.createGroupMembers(userIds);
-    return const Success(null);
-  } catch (error) {
-    return Error(FailureExceptions.getException(error));
+  Future<Result<void, Failure>> createGroupMembers(List<String> userIds) async {
+    try {
+      await _remoteDataSource.createGroupMembers(userIds);
+      return const Success(null);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
   }
-}
-  
 }

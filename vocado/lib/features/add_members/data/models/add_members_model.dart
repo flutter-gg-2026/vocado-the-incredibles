@@ -1,5 +1,5 @@
-import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
 
 part 'add_members_model.freezed.dart';
 part 'add_members_model.g.dart';
@@ -8,8 +8,8 @@ part 'add_members_model.g.dart';
 abstract class AddMembersModel with _$AddMembersModel {
   const factory AddMembersModel({
     required String id,
-    required String name,
-    required String email,
+    @Default('') String name,
+    @Default('') String email,
   }) = _AddMembersModel;
 
   factory AddMembersModel.fromJson(Map<String, Object?> json) =>

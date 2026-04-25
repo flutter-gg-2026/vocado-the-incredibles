@@ -1,5 +1,5 @@
-import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
+import 'package:multiple_result/multiple_result.dart';
 import 'package:vocado/core/errors/failure.dart';
 import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
 import 'package:vocado/features/add_members/domain/repositories/add_members_repository_domain.dart';

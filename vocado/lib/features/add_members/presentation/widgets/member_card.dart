@@ -13,15 +13,12 @@ class MemberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name =
-        member.name.isEmpty ? "Unknown User" : member.name;
+    final name = member.name.isEmpty ? "Unknown User" : member.name;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isSelected
-            ? const Color(0xffEEF0FF)
-            : Colors.white,
+        color: isSelected ? const Color(0xffEEF0FF) : Colors.white,
         borderRadius: BorderRadius.circular(22),
       ),
       child: Row(
@@ -35,11 +32,17 @@ class MemberCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 14),
-          Expanded(child: Text(name)),
+          Expanded(
+            child: Text(
+              name,
+              style: const TextStyle(
+                color: Color(0xff24224A),
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
           Icon(
-            isSelected
-                ? Icons.check_circle
-                : Icons.add_circle_outline,
+            isSelected ? Icons.check_circle : Icons.add_circle_outline,
             color: const Color(0xff3D35A6),
           ),
         ],

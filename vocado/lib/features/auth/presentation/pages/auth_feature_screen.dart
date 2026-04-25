@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_state.dart';
 
@@ -62,7 +64,8 @@ class AuthFeatureScreen extends HookWidget {
                     //   passwordControuller.text,
                     // );
                   },
-                  child: Text('go'),
+                  child: ElevatedButton(onPressed: () {context.go(Routes.addMembers);}, child:  Text("login"),),
+                
                 ),
               ],
             ),

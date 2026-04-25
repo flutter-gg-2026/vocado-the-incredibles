@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:vocado/core/navigation/routers.dart';
-import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_cubit.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_state.dart';
 import 'package:vocado/features/add_members/presentation/widgets/empty_card.dart';
@@ -23,10 +20,14 @@ class AddMembersFeatureScreen extends StatelessWidget {
           listener: (context, state) {
             if (state is AddMembersGroupCreatedState) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Group created successfully')),
+                const SnackBar(
+                  content: Text('Group created successfully'),
+                ),
               );
 
-             context.push(Routes.userTask);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
             }
           },
           child: BlocBuilder<AddMembersCubit, AddMembersState>(
@@ -50,7 +51,6 @@ class AddMembersFeatureScreen extends StatelessWidget {
                     children: [
                       const Header(),
                       const Gap(24),
-
                       const Text(
                         "Add members to your group",
                         style: TextStyle(
@@ -59,13 +59,9 @@ class AddMembersFeatureScreen extends StatelessWidget {
                           color: Color(0xff24224A),
                         ),
                       ),
-
                       const Gap(24),
-
-                      const SearchBox(),
-
+                 
                       const Gap(24),
-
                       const Text(
                         "Members",
                         style: TextStyle(
@@ -74,9 +70,7 @@ class AddMembersFeatureScreen extends StatelessWidget {
                           color: Color(0xff24224A),
                         ),
                       ),
-
                       const Gap(14),
-
                       Expanded(
                         child: members.isEmpty
                             ? const EmptyCard()
@@ -86,24 +80,27 @@ class AddMembersFeatureScreen extends StatelessWidget {
                                     const Gap(12),
                                 itemBuilder: (context, index) {
                                   final member = members[index];
-                                  final isSelected = cubit.selectedMembers
-                                      .contains(member);
+                                  final isSelected =
+                                      cubit.selectedMembers.contains(member);
 
-                                  return GestureDetector(
-                                    onTap: () {
-                                      cubit.toggleMember(member);
-                                    },
-                                    child: MemberCard(
-                                      member: member,
-                                      isSelected: isSelected,
+                                  return Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(22),
+                                      onTap: () {
+                                        print('TAPPED MEMBER: ${member.name}');
+                                        cubit.toggleMember(member);
+                                      },
+                                      child: MemberCard(
+                                        member: member,
+                                        isSelected: isSelected,
+                                      ),
                                     ),
                                   );
                                 },
                               ),
                       ),
-
                       const Gap(24),
-
                       SizedBox(
                         height: 58,
                         width: double.infinity,
@@ -117,7 +114,9 @@ class AddMembersFeatureScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            context.read<AddMembersCubit>().confirmMembers();
+                            context
+                                .read<AddMembersCubit>()
+                                .confirmMembers();
                           },
                           child: const Text(
                             "Confirm Members",

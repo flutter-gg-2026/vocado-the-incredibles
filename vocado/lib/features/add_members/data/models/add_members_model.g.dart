@@ -9,8 +9,8 @@ part of 'add_members_model.dart';
 _AddMembersModel _$AddMembersModelFromJson(Map<String, dynamic> json) =>
     _AddMembersModel(
       id: json['id'] as String,
-      name: json['name'] as String,
-      email: json['email'] as String,
+      name: json['name'] as String? ?? '',
+      email: json['email'] as String? ?? '',
     );
 
 Map<String, dynamic> _$AddMembersModelToJson(_AddMembersModel instance) =>

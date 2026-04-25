@@ -30,5 +30,4 @@ class AddMembersErrorState extends AddMembersState {
   List<Object?> get props => [message];
 }
 
-/// 👇 ADD THIS
 class AddMembersGroupCreatedState extends AddMembersState {}

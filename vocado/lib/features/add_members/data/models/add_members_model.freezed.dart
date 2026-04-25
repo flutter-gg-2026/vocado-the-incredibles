@@ -211,12 +211,12 @@ return $default(_that.id,_that.name,_that.email);case _:
 @JsonSerializable()
 
 class _AddMembersModel implements AddMembersModel {
-  const _AddMembersModel({required this.id, required this.name, required this.email});
+  const _AddMembersModel({required this.id, this.name = '', this.email = ''});
   factory _AddMembersModel.fromJson(Map<String, dynamic> json) => _$AddMembersModelFromJson(json);
 
 @override final  String id;
-@override final  String name;
-@override final  String email;
+@override@JsonKey() final  String name;
+@override@JsonKey() final  String email;
 
 /// Create a copy of AddMembersModel
 /// with the given fields replaced by the non-null parameter values.

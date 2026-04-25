@@ -21,6 +21,8 @@ import 'package:vocado/features/add_members/domain/repositories/add_members_repo
     as _i182;
 import 'package:vocado/features/add_members/domain/use_cases/add_members_use_case.dart'
     as _i621;
+import 'package:vocado/features/add_members/presentation/cubit/add_members_cubit.dart'
+    as _i735;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -42,6 +44,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i621.AddMembersUseCase>(
       () => _i621.AddMembersUseCase(gh<_i182.AddMembersRepositoryDomain>()),
+    );
+    gh.factory<_i735.AddMembersCubit>(
+      () => _i735.AddMembersCubit(gh<_i621.AddMembersUseCase>()),
     );
     return this;
   }
