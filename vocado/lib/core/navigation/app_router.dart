@@ -23,7 +23,7 @@ import 'package:vocado/features/view_members/presentation/cubit/view_members_cub
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.userTask,
+    initialLocation: Routes.auth,
     routes: [
       GoRoute(
         path: Routes.splash,
