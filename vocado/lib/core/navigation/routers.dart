@@ -4,4 +4,6 @@ class Routes {
   static const String taskCreate = '/taskCreate';
   static const String adminDashboard = '/adminDashboard';
   static const String auth = '/auth';
+  static const String addMembers = '/addMembers';
+  static const String userTask = '/userTask';
 }
