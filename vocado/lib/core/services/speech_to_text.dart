@@ -12,12 +12,10 @@ import 'package:vocado/core/network/dio_client.dart';
 class SpeechToText {
   final DioClient _dioClient;
 
-  late Dio _dio;
-
   SpeechToText(this._dioClient) {
-    _dio = _dioClient.dio;
-    _dio.options.baseUrl = ApiEndpoints.transcriptBaseUrl;
-    _dio.options.headers = {
+    _dioClient.dio.options.baseUrl = ApiEndpoints.transcriptBaseUrl;
+    _dioClient.dio.options.headers = {
+      'Accept': 'application/json',
       "Content-Type": "multipart/form-data",
       "x-gladia-key": dotenv.env['gladia_key'],
     };
@@ -51,7 +49,9 @@ class SpeechToText {
   }
 
   Future<Map<String, dynamic>> _uploadFile(FormData formData) async {
-    final uploadResponse = await _dio.post(
+    log('Uploading audio file');
+
+    final uploadResponse = await _dioClient.dio.post(
       ApiEndpoints.transcriptLoad,
       data: formData,
     );
@@ -66,7 +66,7 @@ class SpeechToText {
   }
 
   Future<Map<String, dynamic>> _createJob(String audioUrl) async {
-    final jobResponse = await _dio.post(
+    final jobResponse = await _dioClient.dio.post(
       ApiEndpoints.transcriptJobCreate,
       data: {
         "audio_url": audioUrl,
@@ -102,8 +102,6 @@ class SpeechToText {
       throw Exception(jobResponse.statusMessage);
     }
 
-    log("Transcription is loading!...");
-
     return jobResponse.data;
   }
 
@@ -111,8 +109,10 @@ class SpeechToText {
     bool isDone = false;
     Response<dynamic> resultResponse;
 
+    log("Transcription is loading!...");
+
     do {
-      resultResponse = await _dio.get(
+      resultResponse = await _dioClient.dio.get(
         ApiEndpoints.transcriptResultEndpoint(transId),
       );
 

@@ -11,16 +11,16 @@ class AuthUseCase {
 
   AuthUseCase(this.repositoryData);
 
-  //  Future<Result<AuthEntity, Failure>> getAuth() async {
-  //   return _repositoryData.getAuth();
-  // }
-
   Future<Result<AuthEntity, Failure>> logIn(String email, String password){
     return repositoryData.logIn(email, password);
   }
 
   Future<Result<AuthEntity, Failure>> signUp (String email, String password, String role, String name){
     return repositoryData.signUp(email, password, role, name);
+  }
+
+  Future<Result<void, Failure>> logOut(){
+    return repositoryData.logOut();
   }
 
 }

@@ -10,9 +10,10 @@ _AdminDashboardModel _$AdminDashboardModelFromJson(Map<String, dynamic> json) =>
     _AdminDashboardModel(
       id: json['id'] as String,
       task: json['task'] as String,
-      assignee: json['assignee'] as String?,
+      assignee: json['name'] as String?,
       assigneeId: json['assignee_id'] as String,
       dueDate: DateTime.parse(json['due_date'] as String),
+      createdAt: DateTime.parse(json['created_at'] as String),
       completed: json['completed'] as bool,
     );
 
@@ -21,8 +22,9 @@ Map<String, dynamic> _$AdminDashboardModelToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'task': instance.task,
-  'assignee': instance.assignee,
+  'name': instance.assignee,
   'assignee_id': instance.assigneeId,
   'due_date': instance.dueDate.toIso8601String(),
+  'created_at': instance.createdAt.toIso8601String(),
   'completed': instance.completed,
 };

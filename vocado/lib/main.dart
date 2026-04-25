@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:vocado/core/services/serviceUser.dart';
 import 'core/setup.dart';
 import 'core/theme/app_theme.dart';
 import 'core/di/configure_dependencies.dart';
@@ -12,6 +13,13 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await setup();
   await configureDependencies();
+  try {
+  final serviceUser = getIt<ServiceUser>();
+  await serviceUser.loadSession();
+} catch (error) {
+  print('LOAD SESSION ERROR: $error');
+}
+
 
   runApp(
     EasyLocalization(

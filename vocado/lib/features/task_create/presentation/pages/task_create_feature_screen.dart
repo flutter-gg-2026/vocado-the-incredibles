@@ -24,12 +24,9 @@ class TaskCreateFeatureScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AddConfirmationWidget(task: state.task),
               ).then((value) {
-                if (value == true) {
-                  print('to Save');
-                  if (context.mounted) {
-                    cubit.saveTask(state.task);
-                    context.showLoading();
-                  }
+                if (value == true && context.mounted) {
+                  cubit.saveTask(state.task);
+                  context.showLoading();
                 }
               });
             }
@@ -60,7 +57,7 @@ class TaskCreateFeatureScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Text(
-                          'Add your task to your team member by recording your voice.\n pleas make sure to mention a member name that’s you assigned this task for',
+                          'Add your task to your team member by recording your voice.\n please make sure to mention a member name that’s you assigned this task for.',
                           textAlign: .justify,
                         ),
                       ),
