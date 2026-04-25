@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:vocado/core/services/local_keys_service.dart';
 import 'package:vocado/features/profile/data/models/profile_model.dart';
 
 
@@ -12,9 +11,8 @@ abstract class BaseProfileRemoteDataSource {
 @LazySingleton(as: BaseProfileRemoteDataSource)
 class ProfileRemoteDataSource implements BaseProfileRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
 
-  ProfileRemoteDataSource(this._localKeysService, this._supabase);
+  ProfileRemoteDataSource(this._supabase);
 
   @override
   Future<ProfileModel> getProfile(String userId) async {

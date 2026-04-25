@@ -12,7 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
-import 'package:vocado/core/services/service_user.dart' as _i124;
+import 'package:vocado/core/services/service_user.dart' as _i258;
 import 'package:vocado/features/admin_dashboard/data/datasources/admin_dashboard_remote_data_source.dart'
     as _i402;
 import 'package:vocado/features/admin_dashboard/data/repositories/admin_dashboard_repository_data.dart'
@@ -32,7 +32,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i402.BaseAdminDashboardRemoteDataSource>(
       () => _i402.AdminDashboardRemoteDataSource(
         gh<_i454.SupabaseClient>(),
-        gh<_i124.ServiceUser>(),
+        gh<_i258.ServiceUser>(),
       ),
     );
     gh.lazySingleton<_i236.AdminDashboardRepositoryDomain>(

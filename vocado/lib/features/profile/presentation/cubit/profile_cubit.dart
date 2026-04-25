@@ -38,8 +38,8 @@ class ProfileCubit extends Cubit<ProfileState> {
    
 
 Future<void> updateProfileMethod(String name) async {
+  
   final userId = _serviceUser.currentUser!.id;
-
   final result = await _profileUseCase.updateProfile(name, userId);
 
   result.when(

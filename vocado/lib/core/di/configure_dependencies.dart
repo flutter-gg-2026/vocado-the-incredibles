@@ -8,6 +8,7 @@ import 'package:vocado/features/auth/di/auth_di.dart';
 import 'package:vocado/features/add_members/di/add_members_di.dart';
 import 'package:vocado/features/user_task/di/user_task_di.dart';
 import 'package:vocado/features/view_members/di/view_members_di.dart';
+import 'package:vocado/features/loading/di/loading_di.dart';
 
 
   final getIt = GetIt.instance;
@@ -28,4 +29,5 @@ Future<void> configureDependencies() async {
     configureAdminDashboard(getIt);
     configureProfile(getIt);
     configureViewMembers(getIt);
+    configureLoading(getIt);
 }

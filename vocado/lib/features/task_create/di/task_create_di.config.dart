@@ -14,7 +14,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 import 'package:vocado/core/services/google_gemini.dart' as _i146;
 import 'package:vocado/core/services/record_service.dart' as _i630;
-import 'package:vocado/core/services/service_user.dart' as _i124;
+import 'package:vocado/core/services/service_user.dart' as _i258;
 import 'package:vocado/core/services/speech_to_text.dart' as _i311;
 import 'package:vocado/features/task_create/data/datasources/task_create_remote_data_source.dart'
     as _i500;
@@ -45,7 +45,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i454.SupabaseClient>(),
         gh<_i146.GoogleGemini>(),
         gh<_i311.SpeechToText>(),
-        gh<_i124.ServiceUser>(),
+        gh<_i258.ServiceUser>(),
       ),
     );
     gh.lazySingleton<_i51.TaskCreateRepositoryDomain>(
