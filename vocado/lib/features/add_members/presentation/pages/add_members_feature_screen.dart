@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_cubit.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_state.dart';
 import 'package:vocado/features/add_members/presentation/widgets/empty_card.dart';
@@ -117,6 +119,7 @@ class AddMembersFeatureScreen extends StatelessWidget {
                             context
                                 .read<AddMembersCubit>()
                                 .confirmMembers();
+                                context.go(Routes.adminDashboard);
                           },
                           child: const Text(
                             "Confirm Members",
