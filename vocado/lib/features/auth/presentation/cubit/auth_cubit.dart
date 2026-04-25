@@ -45,6 +45,7 @@ Future<void> checkAuth() async {
     final result = await _authUseCase.signUp(email, password, role, name);
     result.when(
       (success) {
+        serviceUser.setUser(success);
         emit(AuthSuccessState(success));
       },
       (whenError) {

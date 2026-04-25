@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:vocado/core/di/configure_dependencies.config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/features/auth/di/auth_di.dart';
+import 'package:vocado/features/profile/di/profile_di.dart';
 
   final getIt = GetIt.instance;
 
@@ -15,4 +16,5 @@ import 'package:vocado/features/auth/di/auth_di.dart';
 Future<void> configureDependencies() async {
   getIt.init();
   configureAuth(getIt);
+    configureProfile(getIt);
 }
