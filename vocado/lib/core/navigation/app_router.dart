@@ -23,45 +23,8 @@ import 'package:vocado/features/view_members/presentation/cubit/view_members_cub
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.adminDashboard,
+    initialLocation: Routes.auth,
     routes: [
-      GoRoute(
-        path: Routes.splash,
-        builder: (context, state) {
-          return Scaffold(body: Center(child: Text("splash screen")));
-        },
-      ),
-
-      GoRoute(
-        path: Routes.userTask,
-        builder: (context, state) => BlocProvider(
-          create: (context) => UserTaskCubit(GetIt.I.get()),
-          child: const UserTaskFeatureScreen(),
-        ),
-      ),
-
-      GoRoute(
-        path: Routes.auth,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(GetIt.I.get()),
-          child: const AuthFeatureScreen(),
-        ),
-      ),
-
-      // ✅ MOVE THIS INSIDE
-      GoRoute(
-        path: Routes.profile,
-        redirect: (context, state) {
-          final serviceUser = getIt<ServiceUser>();
-          if (!serviceUser.isLoggedIn) return Routes.auth;
-          return null;
-        },
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<ProfileCubit>(),
-          child: const ProfileFeatureScreen(),
-        ),
-      ),
-
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
             NavBar(navigationShell: navigationShell),
@@ -99,17 +62,50 @@ class AppRouter {
               ),
             ],
           ),
+
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.profile,
+                redirect: (context, state) {
+                  final serviceUser = getIt<ServiceUser>();
+                  if (!serviceUser.isLoggedIn) return Routes.auth;
+                  return null;
+                },
+                builder: (context, state) => BlocProvider(
+                  create: (context) => getIt<ProfileCubit>(),
+                  child: const ProfileFeatureScreen(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
-    
-  GoRoute(
-    path: Routes.viewMembers,
-    builder: (context, state) => BlocProvider(
+
+      GoRoute(
+        path: Routes.userTask,
+        builder: (context, state) => BlocProvider(
+          create: (context) => UserTaskCubit(GetIt.I.get()),
+          child: const UserTaskFeatureScreen(),
+        ),
+      ),
+
+      GoRoute(
+        path: Routes.auth,
+        builder: (context, state) => BlocProvider(
+          create: (context) => AuthCubit(GetIt.I.get()),
+          child: const AuthFeatureScreen(),
+        ),
+      ),
+
+      GoRoute(
+        path: Routes.viewMembers,
+        builder: (context, state) => BlocProvider(
           create: (context) => ViewMembersCubit(GetIt.I.get()),
           child: const ViewMembersFeatureScreen(),
         ),
-  ),
-],
+      ),
+    ],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

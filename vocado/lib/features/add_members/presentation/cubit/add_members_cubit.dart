@@ -9,6 +9,7 @@ class AddMembersCubit extends Cubit<AddMembersState> {
   final AddMembersUseCase _addMembersUseCase;
 
   final List<AddMembersEntity> selectedMembers = [];
+  List<AddMembersEntity> lastMembers = [];
 
   AddMembersCubit(this._addMembersUseCase) : super(AddMembersInitialState()) {
     getAddMembersMethod();
@@ -21,7 +22,16 @@ class AddMembersCubit extends Cubit<AddMembersState> {
 
     result.when(
       (members) {
-        emit(AddMembersSuccessState(members));
+
+        lastMembers = members;
+
+ 
+        emit(
+          AddMembersSuccessState(
+            members: members,
+            selectedMembers: List.from(selectedMembers),
+          ),
+        );
       },
       (failure) {
         emit(AddMembersErrorState(failure.message));
@@ -29,22 +39,20 @@ class AddMembersCubit extends Cubit<AddMembersState> {
     );
   }
 
- void toggleMember(AddMembersEntity member) {
-  if (selectedMembers.contains(member)) {
-    selectedMembers.remove(member);
-  } else {
-    selectedMembers.add(member);
+  void toggleMember(AddMembersEntity member) {
+    if (selectedMembers.contains(member)) {
+      selectedMembers.remove(member);
+    } else {
+      selectedMembers.add(member);
+    }
+
+    emit(
+      AddMembersSuccessState(
+        members: List.from(lastMembers),
+        selectedMembers: List.from(selectedMembers),
+      ),
+    );
   }
-
-  print('SELECTED: ${selectedMembers.map((e) => e.name).toList()}');
-
-  if (state is AddMembersSuccessState) {
-    final currentState = state as AddMembersSuccessState;
-
-    emit(AddMembersLoadingState());
-    emit(AddMembersSuccessState(currentState.members));
-  }
-}
 
   Future<void> confirmMembers() async {
     if (selectedMembers.isEmpty) {
@@ -59,16 +67,31 @@ class AddMembersCubit extends Cubit<AddMembersState> {
     final result = await _addMembersUseCase.createGroupMembers(ids);
 
     result.when(
-      (_) async {
-        selectedMembers.clear();
+      (success) {
+        final confirmed = List<AddMembersEntity>.from(selectedMembers);
+        final currentMembers = lastMembers;
 
-        emit(AddMembersGroupCreatedState());
+        emit(
+          AddMembersConfirmedState(
+            confirmedMembers: confirmed,
+            members: currentMembers,
+          ),
+        );
+      },
+      (error) {
+        emit(AddMembersErrorState(error.message));
+      },
+    );
+  }
 
-        await getAddMembersMethod();
-      },
-      (failure) {
-        emit(AddMembersErrorState(failure.message));
-      },
+  void removeSelectedMember(AddMembersEntity member) {
+    selectedMembers.remove(member);
+
+    emit(
+      AddMembersConfirmedState(
+        confirmedMembers: List.from(selectedMembers),
+        members: lastMembers,
+      ),
     );
   }
 }
