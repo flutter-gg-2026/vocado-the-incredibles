@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/profile/domain/use_cases/profile_use_case.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_state.dart';
 @injectable

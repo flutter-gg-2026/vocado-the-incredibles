@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/common/models/auth_model.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 
 abstract class BaseAuthRemoteDataSource {
 

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vocado/core/di/configure_dependencies.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_state.dart';
 

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vocado/core/navigation/routers.dart';
+import 'package:vocado/core/utils/validators.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_state.dart';
 
@@ -12,7 +13,9 @@ class AuthFeatureScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isLogin = useState(true);
-
+    final formKeyEmail = GlobalKey<FormState>();
+    final formKeyName = GlobalKey<FormState>();
+    final formKeyPassword = GlobalKey<FormState>();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final nameController = useTextEditingController();
@@ -52,8 +55,6 @@ class AuthFeatureScreen extends HookWidget {
                    emailController.clear();
                    passwordController.clear();
                    nameController.clear();
-
-                  // context.go(Routes.);
                   
                 } else if (state is AuthErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -80,37 +81,45 @@ class AuthFeatureScreen extends HookWidget {
 
                     Gap(32),
 
-                    // NAME (signup only)
                     if (!isLogin.value)
-                      TextField(
+                      TextFormField(
+                        key: formKeyName,
                         controller: nameController,
                         decoration: InputDecoration(
                           labelText: "Name",
                           border: OutlineInputBorder(),
                         ),
+                        validator: (value) => Validators.validateRequired(value, fieldName: 'Name'),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                       ),
 
-                    if (!isLogin.value) Gap(16),
+                    if (!isLogin.value)
+                    Gap(16),
 
-                    // EMAIL
-                    TextField(
+                    TextFormField(
+                      key: formKeyEmail,
                       controller: emailController,
                       decoration: InputDecoration(
                         labelText: "Email",
                         border: OutlineInputBorder(),
                       ),
+                      validator: Validators.validateEmail,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
                     Gap(16),
 
                     // PASSWORD
-                    TextField(
+                    TextFormField(
+                      key: formKeyPassword,
                       controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: "Password",
                         border: OutlineInputBorder(),
                       ),
+                      validator: Validators.validatePassword,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
 
                     Gap(16),
@@ -151,6 +160,7 @@ class AuthFeatureScreen extends HookWidget {
                     TextButton(
                       onPressed: () {
                         isLogin.value = !isLogin.value;
+                        
                       },
                       child: Text(
                         isLogin.value

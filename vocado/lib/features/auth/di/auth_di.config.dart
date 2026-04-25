@@ -12,7 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
-import 'package:vocado/core/services/serviceUser.dart' as _i124;
+import 'package:vocado/core/services/service_user.dart' as _i124;
 import 'package:vocado/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i906;
 import 'package:vocado/features/auth/data/repositories/auth_repository_data.dart'
