@@ -26,8 +26,10 @@ class AppRouter {
     initialLocation: Routes.auth,
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) =>
-            NavBar(navigationShell: navigationShell),
+        builder: (context, state, navigationShell) => NavBar(
+          navigationShell: navigationShell,
+          serviceUser: GetIt.I.get(),
+        ),
         branches: [
           StatefulShellBranch(
             routes: [

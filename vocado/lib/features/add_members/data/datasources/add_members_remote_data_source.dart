@@ -21,7 +21,7 @@ abstract class BaseAddMembersRemoteDataSource {
 class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
   final SupabaseClient _supabase;
 
-  AddMembersRemoteDataSource( this._supabase);
+  AddMembersRemoteDataSource(this._supabase);
 
   @override
   Future<List<AddMembersModel>> getAddMembers() async {
@@ -81,9 +81,7 @@ Future<void> createGroupMembers(List<String> userIds) async {
     try {
       await _supabase
           .from('members')
-          .update({
-            'due_date': dueDate.toIso8601String(),
-          })
+          .update({'due_date': dueDate.toIso8601String()})
           .eq('id', memberRowId)
           .select();
 
@@ -93,6 +91,4 @@ Future<void> createGroupMembers(List<String> userIds) async {
       throw FailureExceptions.getException(error);
     }
   }
-
-  
 }

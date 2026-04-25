@@ -26,7 +26,7 @@ class GoogleGemini {
         "parts": [
           {
             "text":
-                'Extract required info from content and if some is missing respond with "not enough info" otherwise Respond with exact absolute response json format with no ```json as "{ "task": "task from content", "assignee": "member name", "due_date": "yyyy-mm-dd" }"',
+                'Extract required info from content and if some is missing respond with "not enough info" otherwise Respond with exact absolute response json format with no ```json as "{ "task": "task from content", "assignee": "absolute member name with no pronounces", "due_date": "yyyy-mm-dd" }"',
           },
         ],
       },
@@ -41,7 +41,7 @@ class GoogleGemini {
 
     log('Google Service Started');
 
-    final response = await _dioClient.post(
+    /* final response = await _dioClient.post(
       ApiEndpoints.googleGeminiModelEndpoint(ApiEndpoints.geminiModel25Flash),
       data: body,
     );
@@ -55,9 +55,11 @@ class GoogleGemini {
 
     if ((taskJson as String).contains('not enough info')) {
       throw Exception('No Task is recognized');
-    }
+    } */
 
-    final json = jsonDecode(taskJson);
+    final json = jsonDecode(
+      '{ "task": "Finish Project", "assignee": "hamzah", "due_date": "2026-04-26" }',
+    );
 
     log('Google Service Finished');
 

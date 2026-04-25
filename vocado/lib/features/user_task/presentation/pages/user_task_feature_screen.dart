@@ -33,7 +33,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
               final allTask = state.tasks;
               final now = DateTime.now();
 
-              final name = allTask.isNotEmpty ? allTask : 'User';
+         
 
               final newTasks = allTask
                   .where(
@@ -59,8 +59,8 @@ class UserTaskFeatureScreen extends StatelessWidget {
                   )
                   .toList();
 
-              final progressTasks = allTask
-                  .where((task) => task.status == 'Completed')
+              final progressTasks = state.tasks
+                  .where((task) => task.status == 'Pending')
                   .toList();
 
               return SingleChildScrollView(
