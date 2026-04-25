@@ -35,6 +35,8 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
       content: transcript['english'],
     );
 
+    
+
     return TaskCreateModel.fromJson(taskJson);
   }
 
@@ -63,7 +65,7 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
     await _supabase.from('tasks').insert({
       "task": newTask.task,
       "assignee_id": assignee[0]['id'],
-      "assigned_by": '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb',
+      "assigned_by": _serviceUser.currentUser!.id,
       "due_date": newTask.dueDate.toIso8601String(),
     });
   }

@@ -19,8 +19,9 @@ class NavBar extends StatelessWidget {
           buttonBackgroundColor: Theme.of(context).colorScheme.primary,
           items: [
             Icon(Icons.home, size: 30),
+            Icon(Icons.group, size: 30),
+            Icon(Icons.dashboard, size: 30),
             Icon(Icons.person, size: 30),
-            Icon(Icons.dashboard, size: 30), 
           ],
           onTap: (index) {
             navigationShell.goBranch(index);

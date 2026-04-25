@@ -43,18 +43,21 @@ class AuthFeatureScreen extends HookWidget {
             child: BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
                 if (state is AuthSuccessState) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Success'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                   emailController.clear();
-                   passwordController.clear();
-                   nameController.clear();
-
-                  // context.go(Routes.);
-                  
+                  if (!isLogin.value) {
+                    if (role.value == 'user') {
+                      context.go(Routes.userTask);
+                    } else {
+                      context.go(Routes.addMembers);
+                    }
+                  } else {
+                    if (state.user != null) {
+                      if (state.user!.role == .admin) {
+                        context.go(Routes.addMembers);
+                      } else {
+                        context.go(Routes.userTask);
+                      }
+                    }
+                  }
                 } else if (state is AuthErrorState) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -151,30 +154,12 @@ class AuthFeatureScreen extends HookWidget {
                     TextButton(
                       onPressed: () {
                         isLogin.value = !isLogin.value;
-                        
                       },
                       child: Text(
                         isLogin.value
                             ? "Don't have account? Sign Up"
                             : "Already have account? Login",
                       ),
-                    ),
-
-                  Gap(16),
-
-                    IconButton(
-                      onPressed: () {
-                        context.read<AuthCubit>().logOutMethod();
-                      },
-                      icon: Icon(Icons.logout),
-                    ),
-                  Gap(16),
-
-                    IconButton(
-                      onPressed: () {
-                        context.push(Routes.profile);
-                      },
-                      icon: Icon(Icons.square, size: 30,),
                     ),
                   ],
                 );

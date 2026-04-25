@@ -20,7 +20,7 @@ class AdminDashboardRemoteDataSource
     final response = await _supabase
         .from('tasks')
         .select('*, users!assignee_id(name)')
-        .eq('assigned_by', '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb');
+        .eq('assigned_by', _serviceUser.currentUser!.id);
 
     final tasks = response.map((task) {
       task['name'] = task['users']['name'];
