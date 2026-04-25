@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'auth_model.dart';
+part of 'profile_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'auth_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$AuthModel {
+mixin _$ProfileModel {
 
- String get id; String get name; String get email; String get role;
-/// Create a copy of AuthModel
+ String get id; String? get name; String get email; String get role;
+/// Create a copy of ProfileModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$AuthModelCopyWith<AuthModel> get copyWith => _$AuthModelCopyWithImpl<AuthModel>(this as AuthModel, _$identity);
+$ProfileModelCopyWith<ProfileModel> get copyWith => _$ProfileModelCopyWithImpl<ProfileModel>(this as ProfileModel, _$identity);
 
-  /// Serializes this AuthModel to a JSON map.
+  /// Serializes this ProfileModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,18 +37,18 @@ int get hashCode => Object.hash(runtimeType,id,name,email,role);
 
 @override
 String toString() {
-  return 'AuthModel(id: $id, name: $name, email: $email, role: $role)';
+  return 'ProfileModel(id: $id, name: $name, email: $email, role: $role)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AuthModelCopyWith<$Res>  {
-  factory $AuthModelCopyWith(AuthModel value, $Res Function(AuthModel) _then) = _$AuthModelCopyWithImpl;
+abstract mixin class $ProfileModelCopyWith<$Res>  {
+  factory $ProfileModelCopyWith(ProfileModel value, $Res Function(ProfileModel) _then) = _$ProfileModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String email, String role
+ String id, String? name, String email, String role
 });
 
 
@@ -56,20 +56,20 @@ $Res call({
 
 }
 /// @nodoc
-class _$AuthModelCopyWithImpl<$Res>
-    implements $AuthModelCopyWith<$Res> {
-  _$AuthModelCopyWithImpl(this._self, this._then);
+class _$ProfileModelCopyWithImpl<$Res>
+    implements $ProfileModelCopyWith<$Res> {
+  _$ProfileModelCopyWithImpl(this._self, this._then);
 
-  final AuthModel _self;
-  final $Res Function(AuthModel) _then;
+  final ProfileModel _self;
+  final $Res Function(ProfileModel) _then;
 
-/// Create a copy of AuthModel
+/// Create a copy of ProfileModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = freezed,Object? email = null,Object? role = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,
   ));
@@ -78,8 +78,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [AuthModel].
-extension AuthModelPatterns on AuthModel {
+/// Adds pattern-matching-related methods to [ProfileModel].
+extension ProfileModelPatterns on ProfileModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -92,10 +92,10 @@ extension AuthModelPatterns on AuthModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AuthModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ProfileModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AuthModel() when $default != null:
+case _ProfileModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -114,10 +114,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AuthModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ProfileModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _AuthModel():
+case _ProfileModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -135,10 +135,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AuthModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ProfileModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _AuthModel() when $default != null:
+case _ProfileModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -156,9 +156,9 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? name,  String email,  String role)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AuthModel() when $default != null:
+case _ProfileModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.role);case _:
   return orElse();
 
@@ -177,9 +177,9 @@ return $default(_that.id,_that.name,_that.email,_that.role);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String email,  String role)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? name,  String email,  String role)  $default,) {final _that = this;
 switch (_that) {
-case _AuthModel():
+case _ProfileModel():
 return $default(_that.id,_that.name,_that.email,_that.role);case _:
   throw StateError('Unexpected subclass');
 
@@ -197,9 +197,9 @@ return $default(_that.id,_that.name,_that.email,_that.role);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String email,  String role)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? name,  String email,  String role)?  $default,) {final _that = this;
 switch (_that) {
-case _AuthModel() when $default != null:
+case _ProfileModel() when $default != null:
 return $default(_that.id,_that.name,_that.email,_that.role);case _:
   return null;
 
@@ -211,29 +211,29 @@ return $default(_that.id,_that.name,_that.email,_that.role);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _AuthModel implements AuthModel {
-  const _AuthModel({required this.id, required this.name, required this.email, required this.role});
-  factory _AuthModel.fromJson(Map<String, dynamic> json) => _$AuthModelFromJson(json);
+class _ProfileModel implements ProfileModel {
+  const _ProfileModel({required this.id, required this.name, required this.email, required this.role});
+  factory _ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);
 
 @override final  String id;
-@override final  String name;
+@override final  String? name;
 @override final  String email;
 @override final  String role;
 
-/// Create a copy of AuthModel
+/// Create a copy of ProfileModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$AuthModelCopyWith<_AuthModel> get copyWith => __$AuthModelCopyWithImpl<_AuthModel>(this, _$identity);
+_$ProfileModelCopyWith<_ProfileModel> get copyWith => __$ProfileModelCopyWithImpl<_ProfileModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$AuthModelToJson(this, );
+  return _$ProfileModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ProfileModel&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -242,18 +242,18 @@ int get hashCode => Object.hash(runtimeType,id,name,email,role);
 
 @override
 String toString() {
-  return 'AuthModel(id: $id, name: $name, email: $email, role: $role)';
+  return 'ProfileModel(id: $id, name: $name, email: $email, role: $role)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$AuthModelCopyWith<$Res> implements $AuthModelCopyWith<$Res> {
-  factory _$AuthModelCopyWith(_AuthModel value, $Res Function(_AuthModel) _then) = __$AuthModelCopyWithImpl;
+abstract mixin class _$ProfileModelCopyWith<$Res> implements $ProfileModelCopyWith<$Res> {
+  factory _$ProfileModelCopyWith(_ProfileModel value, $Res Function(_ProfileModel) _then) = __$ProfileModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String email, String role
+ String id, String? name, String email, String role
 });
 
 
@@ -261,20 +261,20 @@ $Res call({
 
 }
 /// @nodoc
-class __$AuthModelCopyWithImpl<$Res>
-    implements _$AuthModelCopyWith<$Res> {
-  __$AuthModelCopyWithImpl(this._self, this._then);
+class __$ProfileModelCopyWithImpl<$Res>
+    implements _$ProfileModelCopyWith<$Res> {
+  __$ProfileModelCopyWithImpl(this._self, this._then);
 
-  final _AuthModel _self;
-  final $Res Function(_AuthModel) _then;
+  final _ProfileModel _self;
+  final $Res Function(_ProfileModel) _then;
 
-/// Create a copy of AuthModel
+/// Create a copy of ProfileModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? email = null,Object? role = null,}) {
-  return _then(_AuthModel(
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = freezed,Object? email = null,Object? role = null,}) {
+  return _then(_ProfileModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,
   ));

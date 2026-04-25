@@ -6,4 +6,5 @@ class Routes {
   static const String auth = '/auth';
   static const String taskCreate = '/taskCreate';
   static const String adminDashboard = '/adminDashboard';
+  static const String profile = '/profile';
 }

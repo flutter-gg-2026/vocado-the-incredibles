@@ -13,26 +13,14 @@ class AuthRepositoryData implements AuthRepositoryDomain {
 
   AuthRepositoryData(this.remoteDataSource);
 
-  // @override
-  //   Future<Result<AuthEntity, Failure>> getAuth() async {
-  //     try {
-  //       final response = await remoteDataSource.getAuth();
-  //       return Success(response.toEntity());
-  //     } catch (error) {
-  //       return Error(FailureExceptions.getException(error));
-  //     }
-  //   }
-
   @override
-  Future<Map<String, dynamic>> getCurrentUser(int userId) async {
+  Future<Map<String, dynamic>> getCurrentUser(String userId) async {
     try {
       final response = await remoteDataSource.getCurrentUser(userId);
       return response;
-      //  Success(response);
     } catch (error) {
       print(error.toString());
       return Map();
-      // Error(FailureExceptions.getException(error));
     }
   }
 
@@ -42,7 +30,6 @@ class AuthRepositoryData implements AuthRepositoryDomain {
       final response = await remoteDataSource.logOut();
       return Success(response);
     } catch (e) {
-      print(e.toString());
       return Error(FailureExceptions.getException(e));
     }
   }
@@ -54,13 +41,11 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   ) async {
     try {
       final user = await remoteDataSource.logIn(email, password);
-      final profile = await remoteDataSource.getCurrentUser(user.id);
+      final profile = await remoteDataSource.getCurrentUser(user.id.toString());
       final model = AuthModel.fromJson(profile);
       final entity = model.toEntity();
       return Success(entity);
     } catch (error) {
-      print('______________ repo data ______________');
-      print(error.toString());
       return Error(FailureExceptions.getException(error));
     }
   }

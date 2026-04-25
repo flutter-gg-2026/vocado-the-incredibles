@@ -11,7 +11,6 @@ class ServiceUser {
 
   ServiceUser(this._supabase);
 
-
   AuthEntity? get currentUser => _currentUser;
 
   bool get isLoggedIn => _currentUser != null;
@@ -30,7 +29,7 @@ class ServiceUser {
     final response = await _supabase
         .from('users')
         .select()
-        .eq('auth_id', user.id)
+        .eq('id', user.id)
         .single();
 
     _currentUser = AuthModel.fromJson(response).toEntity();
@@ -46,5 +45,4 @@ class ServiceUser {
     await _supabase.auth.signOut();
     _currentUser = null;
   }
-
 }

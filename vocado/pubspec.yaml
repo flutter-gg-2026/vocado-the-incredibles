@@ -6,7 +6,6 @@ version: 0.1.0+1
 environment:
   sdk: ^3.10.7
 
-
 dependencies:
   bloc: ^9.2.0
   cupertino_icons: ^1.0.9
@@ -50,8 +49,6 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets/icons/
-    - assets/images/
     - assets/translations/
     - .env
   uses-material-design: true

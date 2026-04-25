@@ -6,6 +6,7 @@ import 'package:vocado/features/user_task/di/user_task_di.dart';
 import 'package:vocado/features/auth/di/auth_di.dart';
 import 'package:vocado/features/task_create/di/task_create_di.dart';
 import 'package:vocado/features/admin_dashboard/di/admin_dashboard_di.dart';
+import 'package:vocado/features/profile/di/profile_di.dart';
 
   final getIt = GetIt.instance;
 
@@ -23,4 +24,5 @@ Future<void> configureDependencies() async {
   configureAuth(getIt);
     configureTaskCreate(getIt);
     configureAdminDashboard(getIt);
+    configureProfile(getIt);
 }
