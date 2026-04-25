@@ -10,7 +10,7 @@ class UserTaskUseCase {
 
   UserTaskUseCase(this._repository);
 
-  Future<Result<List<UserTaskEntity>, Failure>> call() {
+  Future<Result<List<UserTaskEntity>, Failure>> call() async {
     return _repository.getUserTasks();
   }
 }

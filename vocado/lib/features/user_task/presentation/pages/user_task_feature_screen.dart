@@ -34,6 +34,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
               final name = state.tasks.isNotEmpty
                   ? state.tasks.first.name
                   : 'User';
+              print(state.tasks[0].toString());
 
               final newTasks = state.tasks
                   .where((task) => task.status == 'new')
@@ -44,7 +45,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                   .toList();
 
               final progressTasks = state.tasks
-                  .where((task) => task.status == 'in_progress')
+                  .where((task) => task.status == 'Pending')
                   .toList();
 
               return SingleChildScrollView(

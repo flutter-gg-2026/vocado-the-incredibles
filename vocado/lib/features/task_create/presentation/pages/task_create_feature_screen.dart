@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/extensions/context_extensions.dart';
 import 'package:vocado/core/widgets/loading_widget.dart';
+import 'package:vocado/features/task_create/domain/entities/task_create_entity.dart';
 import 'package:vocado/features/task_create/presentation/cubit/task_create_cubit.dart';
 import 'package:vocado/features/task_create/presentation/cubit/task_create_state.dart';
 import 'package:vocado/features/task_create/presentation/widgets/add_confirmation_widget.dart';
@@ -24,8 +25,8 @@ class TaskCreateFeatureScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => AddConfirmationWidget(task: state.task),
               ).then((value) {
-                if (value == true && context.mounted) {
-                  cubit.saveTask(state.task);
+                if (value is TaskCreateEntity && context.mounted) {
+                  cubit.saveTask(value);
                   context.showLoading();
                 }
               });

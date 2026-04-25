@@ -15,6 +15,10 @@ class AdminDashboardSuccessState extends AdminDashboardState {
 
   const AdminDashboardSuccessState({required this.tasks});
 
+  AdminDashboardSuccessState copyWith(List<AdminDashboardEntity>? newList) {
+    return AdminDashboardSuccessState(tasks: newList ?? tasks);
+  }
+
   @override
   List<Object?> get props => [tasks];
 }

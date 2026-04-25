@@ -29,13 +29,11 @@ class TaskCreateRemoteDataSource implements BaseTaskCreateRemoteDataSource {
 
   @override
   Future<TaskCreateModel> getTaskCreate(File audio) async {
-    final transcript = await _speechToText.transcriptAudio(audio);
+    //final transcript = await _speechToText.transcriptAudio(audio);
 
     final taskJson = await _googleGemini.getTaskStructured(
-      content: transcript['english'],
+      content: '', //transcript['english'],
     );
-
-    
 
     return TaskCreateModel.fromJson(taskJson);
   }

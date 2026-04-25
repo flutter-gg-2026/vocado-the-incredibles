@@ -4,4 +4,5 @@ import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_
 
 abstract class AdminDashboardRepositoryDomain {
     Future<Result<List<AdminDashboardEntity>, Failure>> getAdminDashboard();
+    Future<Result<void, Failure>> removeTask(AdminDashboardEntity task);
 }

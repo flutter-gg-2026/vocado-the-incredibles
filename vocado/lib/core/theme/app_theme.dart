@@ -13,6 +13,7 @@ abstract class AppTheme {
       secondary: AppColors.secondary,
       surface: AppColors.surface,
       error: AppColors.error,
+      onPrimaryContainer: AppColors.surface,
     ),
     scaffoldBackgroundColor: AppColors.background,
     textTheme: AppTextTheme.lightTextTheme,
@@ -60,4 +61,3 @@ abstract class AppTheme {
     textTheme: AppTextTheme.darkTextTheme,
   );
 }
-
