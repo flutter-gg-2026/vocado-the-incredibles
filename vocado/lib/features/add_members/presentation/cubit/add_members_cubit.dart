@@ -1,0 +1,75 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/features/add_members/domain/entities/add_members_entity.dart';
+import 'package:vocado/features/add_members/domain/use_cases/add_members_use_case.dart';
+import 'package:vocado/features/add_members/presentation/cubit/add_members_state.dart';
+
+class AddMembersCubit extends Cubit<AddMembersState> {
+  final AddMembersUseCase _addMembersUseCase;
+
+  final List<AddMembersEntity> selectedMembers = [];
+
+  AddMembersCubit(this._addMembersUseCase)
+      : super(AddMembersInitialState()){
+        getAddMembersMethod();
+      }
+
+  Future<void> getAddMembersMethod() async {
+    emit(AddMembersLoadingState()); 
+
+    final result = await _addMembersUseCase.getAddMembers();
+
+    result.when(
+      (success) {
+        emit(AddMembersSuccessState(success)); 
+      },
+      (whenError) {
+        emit(AddMembersErrorState(whenError.message)); 
+      },
+    );
+  }
+
+
+  void toggleMember(AddMembersEntity member) {
+    if (selectedMembers.contains(member)) {
+      selectedMembers.remove(member);
+    } else {
+      selectedMembers.add(member);
+    }
+
+    print('SELECTED: ${selectedMembers.map((e) => e.name).toList()}');
+
+    if (state is AddMembersSuccessState) {
+      final current = state as AddMembersSuccessState;
+      emit(AddMembersSuccessState(current.members)); 
+    }
+  }
+
+  /// confirm group
+  Future<void> confirmMembers() async {
+    if (selectedMembers.isEmpty) {
+      print('NO MEMBERS SELECTED');
+      return;
+    }
+
+    final ids = selectedMembers.map((e) => e.id).toList();
+
+    final result = await _addMembersUseCase.createGroupMembers(ids);
+
+    result.when(
+      (_) {
+        print('GROUP CREATED');
+        selectedMembers.clear();
+        emit(AddMembersGroupCreatedState()); // 👈 important
+      },
+      (error) {
+        emit(AddMembersErrorState(error.message));
+      },
+    );
+  }
+
+  @override
+  Future<void> close() {
+    print('Cubit closed');
+    return super.close();
+  }
+}
