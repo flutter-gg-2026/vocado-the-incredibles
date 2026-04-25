@@ -27,18 +27,15 @@ class ViewMembersRemoteDataSource implements BaseViewMembersRemoteDataSource {
       final response = await _supabase
           .from('members')
           .select('''
-          id,
-          due_date,
-          user:users!members_user_id_fkey(
-            id,
-            name,
-            email,
-            role
-          )
-        ''')
+      id,
+      user:users!members_user_id_fkey(
+        id,
+        name,
+        email,
+        role
+      )
+    ''')
           .eq('admin_id', adminId);
-
-    
 
       return response
           .map<ViewMembersModel>((json) => ViewMembersModel.fromJson(json))

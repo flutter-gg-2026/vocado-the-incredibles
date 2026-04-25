@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -97,7 +98,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     SizedBox(
                       height: 190,
                       child: newTasks.isEmpty
-                          ? const EmptyTasksCard(text: "No new tasks")
+                          ?  EmptyTasksCard(text: "No new tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: newTasks.length,
@@ -120,7 +121,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     SizedBox(
                       height: 250,
                       child: lateTasks.isEmpty
-                          ? const EmptyTasksCard(text: "No late tasks")
+                          ?  EmptyTasksCard(text: "No late tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: lateTasks.length,
@@ -141,7 +142,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     const Gap(18),
 
                     progressTasks.isEmpty
-                        ? const EmptyTasksCard(text: "No completed tasks")
+                        ?  EmptyTasksCard(text: "No completed tasks")
                         : ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

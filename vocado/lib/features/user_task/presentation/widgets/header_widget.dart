@@ -22,7 +22,7 @@ class HeaderWidget extends StatelessWidget {
               color: const Color(0xffEAF0FF),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(Icons.person, color: Color(0xff1E4FD8)),
+            child: const Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
           ),
         ),
       ],
