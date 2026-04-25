@@ -22,12 +22,12 @@ class HeaderWidget extends StatelessWidget {
               color: const Color(0xffEAF0FF),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
+            child: const Icon(Icons.group, color: Color.fromARGB(255, 0, 0, 0)),
           ),
         ),
          GestureDetector(
           onTap: () {
-            context.push(Routes.auth);
+            context.push(Routes.profile);
           },
           child: Container(
             height: 48,
@@ -36,7 +36,7 @@ class HeaderWidget extends StatelessWidget {
               color: const Color(0xffEAF0FF),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Icon(Icons.logout_rounded, color: Color.fromARGB(255, 0, 0, 0)),
+            child: const Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
           ),
         ),
       ],
