@@ -36,33 +36,29 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
   }
 
   @override
-  Future<void> createGroupMembers(List<String> userIds) async {
-    try {
-      final user = _supabase.auth.currentUser;
+Future<void> createGroupMembers(List<String> userIds) async {
+  try {
+    final user = _supabase.auth.currentUser;
 
-      if (user == null) {
-        throw Exception('No logged in user');
-      }
-
-      final adminId = user.id;
-
-      final data = userIds.map((userId) {
-        return {
-          'user_id': userId,
-          'admin_id': adminId,
-          'due_date': DateTime.now().toIso8601String(),
-        };
-      }).toList();
-
-  await _supabase.from('members').insert(data).select();
-
-  
-    } catch (error) {
-
-      throw FailureExceptions.getException(error);
+    if (user == null) {
+      throw Exception('No logged in user');
     }
-  }
 
+    final adminId = user.id;
+
+    final data = userIds.map((userId) {
+      return {
+        'user_id': userId,
+        'admin_id': adminId,
+        'group_create_date': DateTime.now().toIso8601String(),
+      };
+    }).toList();
+
+    await _supabase.from('members').insert(data);
+  } catch (error) {
+    throw FailureExceptions.getException(error);
+  }
+}
   @override
   Future<List<Map<String, dynamic>>> getMembersList() async {
     try {
