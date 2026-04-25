@@ -6,7 +6,7 @@ part 'auth_model.g.dart';
 @freezed
 abstract class AuthModel with _$AuthModel {
   const factory AuthModel({
-    required int id,
+    required String id,
     required String name,
     required String email,
     required String role,
