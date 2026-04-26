@@ -13,4 +13,8 @@ class UserTaskUseCase {
   Future<Result<List<UserTaskEntity>, Failure>> call() async {
     return _repository.getUserTasks();
   }
+
+  Future<Result<void, Failure>> markTaskDone(String taskId) {
+  return _repository.markTaskDone(taskId);
+}
 }

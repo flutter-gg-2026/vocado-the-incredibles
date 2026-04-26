@@ -11,7 +11,6 @@ part of 'user_task_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$UserTaskModel {
 
@@ -22,8 +21,6 @@ mixin _$UserTaskModel {
 @pragma('vm:prefer-inline')
 $UserTaskModelCopyWith<UserTaskModel> get copyWith => _$UserTaskModelCopyWithImpl<UserTaskModel>(this as UserTaskModel, _$identity);
 
-  /// Serializes this UserTaskModel to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -31,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.name, name) || other.name == name));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,title,status,dueDate,name);
 
@@ -210,11 +207,11 @@ return $default(_that.id,_that.title,_that.status,_that.dueDate,_that.name);case
 }
 
 /// @nodoc
-@JsonSerializable()
+
 
 class _UserTaskModel implements UserTaskModel {
   const _UserTaskModel({required this.id, @JsonKey(name: 'task') required this.title, @JsonKey(name: 'completed') required this.status, @JsonKey(name: 'due_date') required this.dueDate, required this.name});
-  factory _UserTaskModel.fromJson(Map<String, dynamic> json) => _$UserTaskModelFromJson(json);
+  
 
 @override final  String id;
 @override@JsonKey(name: 'task') final  String title;
@@ -228,17 +225,14 @@ class _UserTaskModel implements UserTaskModel {
 @pragma('vm:prefer-inline')
 _$UserTaskModelCopyWith<_UserTaskModel> get copyWith => __$UserTaskModelCopyWithImpl<_UserTaskModel>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$UserTaskModelToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserTaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.status, status) || other.status == status)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.name, name) || other.name == name));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,id,title,status,dueDate,name);
 

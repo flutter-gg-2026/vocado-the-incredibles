@@ -1,69 +1,104 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/hJTyw86k)
-# 🎙️ VocaDo: Your Task Manager 
-### *The Challenge: Transform Voice into Actionable Logic*
+# 🎙️ VocaDo: Your Task Manager
 
-## 📝 Project Vision
-**VocaDo** is a project built for developers to explore the intersection of **Mobile Development** and **Generative AI**. The goal is to build an application that doesn't just record audio, but "understands" it—converting natural speech into structured tasks and routing users based on their professional roles as defined in the system.
+VocaDo is a Flutter task management application that helps admins create and assign tasks to users in a simple and organized way.
 
----
+The app is connected to Supabase and supports authentication, task assignment, member management, and role-based screens.
 
-## 🛠️ Tech Stack Requirements
-To successfully build VocaDo, you should implement the following technologies:
+## ✨ Features
 
-### 1. Mobile Framework & Architecture
-* **Flutter & Dart:** The core framework.
-* **Clean Architecture:** Separate the project into `Data`, `Domain`, and `Presentation` layers.
-* **BLoC Pattern:** For robust state management and event-driven logic.
+### 🔐 Authentication
+- User login and signup
+- Role-based access
+- Admin and user flow
 
-### 2. The AI Pipeline (The "Brain🧠")
-* **Speech-to-Text (STT):** Suggested use of **Gladia API** or **OpenAI Whisper** to convert audio files into raw text.
-* **Natural Language Processing (NLP):** Use an LLM (like **Gemini 1.5 Flash**) to parse the raw text.
-    * *Challenge:* The AI must return a structured **JSON** object:
-      ```json
-      { "task": "Update the design in Figma", "assignee": "Rasha", "due_date": "2026-04-23" }
-      ```
+### 👥 Members
+- Admin can view users
+- Admin can add members to a group
+- View members added by the current admin
+- Members display name, email, and role
 
-### 3. Role-Based Access Control (RBAC)
-Implement a logic-gate during the login flow:
-* **Admin View:** Access to the **Voice Record Page** to architect and assign tasks.
-* **User View:** Access to the **Task Board** and **Task-index** to view assigned work.
+### ✅ Tasks
+- Admin can create tasks
+- Tasks can be assigned to specific users
+- Users can view only tasks assigned to them
+- Tasks are separated into:
+  - New tasks
+  - Late tasks
+  - Completed tasks
+- Users can mark tasks as done
 
----
+### 📊 Admin Dashboard
+- View created tasks
+- Track assigned tasks
+- Organized task cards
 
-## 🏗️ Suggested Project Roadmap (Design-Driven)
+## 🧱 Project Structure
 
-### Phase 1: Authentication & Entry Points
-* **Login UI:** Build the `Login Page`.
-* **Role Routing:** Implement logic to distinguish between `role: admin` and `role: user`.
-* **Home Dashboard:** Create the `Task-index` screen showing the summary of "New", "Late", and "In Progress" tasks.
 
-### Phase 2: The Voice Command Center (Admin Feature)
-* **Audio Capture:** Integrate the `record` package in the `Voice recorded Page`.
-* **Visual Feedback:** Use `Animations` to create a pulse effect on the microphone icon during recording.
-* **Error Handling:** Build the `Error Status` ("Opps!") screen to handle failed recording attempts.
+lib
+┣ core
+┃ ┣ common
+┃ ┣ di
+┃ ┣ errors
+┃ ┣ navigation
+┃ ┣ services
+┃ ┗ theme
+┣ features
+┃ ┣ auth
+┃ ┣ add_members
+┃ ┣ view_members
+┃ ┣ user_task
+┃ ┗ admin_dashboard
+┗ main.dart
 
-### Phase 3: AI Orchestration & Parsing
-* **STT Integration:** Send audio to Gladia API to receive the transcript.
-* **Prompt Engineering:** Send the transcript to Gemini with a System Prompt that forces a JSON response.
-* **Task Confirmation:** Map the AI response to the `Task Details` screen so the Admin can verify the task before clicking "Approved".
 
-### Phase 4: State Management
-* Use **BLoC** to handle the loading states (`Recording` -> `Transcribing` -> `Parsing` -> `Success`).
+## 🛠️ Tech Stack
+Flutter
+Dart
+Supabase
+BLoC / Cubit
+GoRouter
+GetIt
+Injectable
+Freezed
+JSON Serializable
+Easy Localization
+🗄️ Database Tables
+users
 
-## 📂 Expected Folder Structure
-Students should follow this structure to maintain "Cleanliness":
-```text
-lib/
- ├── core/              # Network info, DI (Get_it), Error handling
- ├── features/
- │   ├── auth/          # Login & Role Logic
- │   ├── task_creator/  # Admin Feature: Record & AI Process
- │   └── task_viewer/   # User Feature: Task List & Details
- └── main.dart
-```
----
-## Ready to Start ! Check the project Design 
-[Click ME](https://www.figma.com/design/orIarysJ6qilKJgHukQfgH/Untitled?node-id=0-1&t=oePpVXgvCfdIXwS2-1) |
+Stores user information such as name, email, and role.
 
-#### All The Best ✨✨✨
+members
 
+Stores relationships between admins and their group members.
+
+tasks
+
+Stores tasks assigned to users.
+
+## 🎥 Demo
+auth:
+<img width="459" height="828" alt="Screenshot 1447-11-09 at 12 52 20 am" src="https://github.com/user-attachments/assets/be4d9f4a-9845-416e-86f7-743b24e40655" />
+<img width="459" height="828" alt="Screenshot 1447-11-09 at 12 52 06 am" src="https://github.com/user-attachments/assets/1c4e309e-8ef6-463a-9d10-6016452c7755" />
+
+admin screens:
+
+<img width="459" height="828" alt="Screenshot 1447-11-09 at 12 55 03 am" src="https://github.com/user-attachments/assets/888cbbff-886b-4e9d-961c-81c19fe5cb03" />
+
+<img width="459" height="828" alt="Screenshot 1447-11-09 at 12 55 51 am" src="https://github.com/user-attachments/assets/2d936d1d-4f85-4c06-bd03-78d9de5001f8" />
+
+
+<img width="450" height="828" alt="Screenshot 1447-11-09 at 1 17 24 am" src="https://github.com/user-attachments/assets/490747e4-2ffb-480c-8ff8-d179a1112d96" />
+
+user screens:
+<img width="459" height="828" alt="Screenshot 1447-11-09 at 12 53 47 am" src="https://github.com/user-attachments/assets/241b7074-b411-4991-bdb1-36c2a535a9d6" />
+
+
+profile:
+<img width="453" height="828" alt="Screenshot 1447-11-09 at 1 18 50 am" src="https://github.com/user-attachments/assets/a4f9312b-0e12-43ac-a158-433e5208cc59" />
+
+
+👩‍💻 Developed By
+Jalnar
+Dalal
+Hatem

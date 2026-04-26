@@ -25,4 +25,13 @@ class UserTaskRepository implements UserTaskRepositoryDomain {
       return Error(FailureExceptions.getException(error));
     }
   }
+  @override
+Future<Result<void, Failure>> markTaskDone(String taskId) async {
+  try {
+    await _remoteDataSource.markTaskDone(taskId);
+    return const Success(null);
+  } catch (error) {
+    return Error(FailureExceptions.getException(error));
+  }
+}
 }

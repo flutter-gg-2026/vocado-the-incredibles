@@ -7,7 +7,9 @@ import 'package:vocado/features/user_task/data/models/user_task_model.dart';
 
 abstract class BaseUserTaskRemoteDataSource {
   Future<List<UserTaskModel>> getUserTasks();
+  Future<void> markTaskDone(String taskId);
 }
+
 
 @LazySingleton(as: BaseUserTaskRemoteDataSource)
 class UserTaskRemoteDataSource implements BaseUserTaskRemoteDataSource {
@@ -47,4 +49,16 @@ class UserTaskRemoteDataSource implements BaseUserTaskRemoteDataSource {
       throw FailureExceptions.getException(error);
     }
   }
+
+  @override
+Future<void> markTaskDone(String taskId) async {
+  try {
+    await _supabase
+        .from('tasks')
+        .update({'completed': true})
+        .eq('id', taskId);
+  } catch (error) {
+    throw FailureExceptions.getException(error);
+  }
+}
 }

@@ -18,18 +18,24 @@ class ViewMembersRemoteDataSource implements BaseViewMembersRemoteDataSource {
   @override
   Future<List<ViewMembersModel>> getViewMembers() async {
     try {
-      final response = await _supabase.from('members').select('''
+      final adminId = _supabase.auth.currentUser?.id;
+
+      if (adminId == null) {
+        return [];
+      }
+
+      final response = await _supabase
+          .from('members')
+          .select('''
       id,
-      due_date,
       user:users!members_user_id_fkey(
         id,
         name,
         email,
         role
       )
-    ''');
-
-      print('VIEW MEMBERS RESPONSE: $response');
+    ''')
+          .eq('admin_id', adminId);
 
       return response
           .map<ViewMembersModel>((json) => ViewMembersModel.fromJson(json))
