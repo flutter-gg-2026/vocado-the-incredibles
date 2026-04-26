@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:vocado/core/errors/network_exceptions.dart';
@@ -10,14 +9,14 @@ import 'package:vocado/features/admin_dashboard/data/models/admin_dashboard_mode
 import 'package:vocado/features/admin_dashboard/domain/repositories/admin_dashboard_repository_domain.dart';
 
 @LazySingleton(as: AdminDashboardRepositoryDomain)
-class AdminDashboardRepositoryData implements AdminDashboardRepositoryDomain{
+class AdminDashboardRepositoryData implements AdminDashboardRepositoryDomain {
   final BaseAdminDashboardRemoteDataSource remoteDataSource;
-
 
   AdminDashboardRepositoryData(this.remoteDataSource);
 
-@override
-  Future<Result<List<AdminDashboardEntity>, Failure>> getAdminDashboard() async {
+  @override
+  Future<Result<List<AdminDashboardEntity>, Failure>>
+  getAdminDashboard() async {
     try {
       final response = await remoteDataSource.getAdminDashboard();
       return Success(response.map((item) => item.toEntity()).toList());
@@ -31,7 +30,7 @@ class AdminDashboardRepositoryData implements AdminDashboardRepositoryDomain{
   @override
   Future<Result<void, Failure>> removeTask(AdminDashboardEntity task) async {
     try {
-      await remoteDataSource.getAdminDashboard();
+      await remoteDataSource.removeTask(task);
       return Success(null);
     } on Failure catch (error) {
       return Error(error);

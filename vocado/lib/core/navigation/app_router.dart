@@ -1,8 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:vocado/core/di/configure_dependencies.dart';
-import 'package:vocado/core/services/service_user.dart';
-import 'package:vocado/core/widgets/loading_widget.dart';
 import 'package:vocado/core/widgets/nav_bar.dart';
 import 'package:vocado/features/add_members/presentation/cubit/add_members_cubit.dart';
 import 'package:vocado/features/add_members/presentation/pages/add_members_feature_screen.dart';
@@ -24,23 +22,10 @@ import 'package:vocado/features/view_members/presentation/cubit/view_members_cub
 import 'package:vocado/features/loading/presentation/pages/loading_feature_screen.dart';
 import 'package:vocado/features/loading/presentation/cubit/loading_cubit.dart';
 
-
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.loading,
     routes: [
-      // GoRoute(
-      //   path: Routes.splash,
-      //   redirect: (context, state) {
-      //     final serviceUser = getIt<ServiceUser>();
-      //     if (!serviceUser.isLoggedIn) return Routes.auth;
-      //     return null;
-      //   },
-      //   builder: (context, state) {
-      //     return Scaffold(body: Center(child: Text("splash screen")));
-      //   },
-      // ),
-
       GoRoute(
         path: Routes.userTask,
         builder: (context, state) => BlocProvider(
@@ -57,22 +42,11 @@ class AppRouter {
         ),
       ),
 
-      GoRoute(
-        path: Routes.profile,
-        // redirect: (context, state) {
-        //   final serviceUser = getIt<ServiceUser>();
-        //   if (!serviceUser.isLoggedIn) return Routes.auth;
-        //   return null;
-        // },
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<ProfileCubit>(),
-          child: const ProfileFeatureScreen(),
-        ),
-      ),
-
       StatefulShellRoute.indexedStack(
-        builder: (context, state, navigationShell) =>
-            NavBar(navigationShell: navigationShell, serviceUser: null,),
+        builder: (context, state, navigationShell) => NavBar(
+          navigationShell: navigationShell,
+          serviceUser: GetIt.I.get(),
+        ),
         branches: [
           StatefulShellBranch(
             routes: [
@@ -107,25 +81,36 @@ class AppRouter {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.profile,
+                builder: (context, state) => BlocProvider(
+                  create: (context) => getIt<ProfileCubit>(),
+                  child: const ProfileFeatureScreen(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
-    
-  GoRoute(
-    path: Routes.viewMembers,
-    builder: (context, state) => BlocProvider(
+
+      GoRoute(
+        path: Routes.viewMembers,
+        builder: (context, state) => BlocProvider(
           create: (context) => ViewMembersCubit(GetIt.I.get()),
           child: const ViewMembersFeatureScreen(),
         ),
-  ),
+      ),
 
-  GoRoute(
-    path: Routes.loading,
-    builder: (context, state) => BlocProvider(
+      GoRoute(
+        path: Routes.loading,
+        builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
           child: const LoadingFeatureScreen(),
         ),
-  ),
-],
+      ),
+    ],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

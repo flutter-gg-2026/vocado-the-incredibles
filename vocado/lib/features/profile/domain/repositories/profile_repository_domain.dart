@@ -6,4 +6,5 @@ abstract class ProfileRepositoryDomain {
     
     Future<Result<ProfileEntity, Failure>> getProfile(String userId);
     Future<Result<ProfileEntity, Failure>> updateProfile(String name ,String userId);
+    Future<Result<void, Failure>> signOUt();
 }

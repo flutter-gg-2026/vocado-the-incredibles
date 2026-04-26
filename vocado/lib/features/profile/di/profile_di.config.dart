@@ -32,7 +32,10 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i489.BaseProfileRemoteDataSource>(
-      () => _i489.ProfileRemoteDataSource(gh<_i454.SupabaseClient>()),
+      () => _i489.ProfileRemoteDataSource(
+        gh<_i454.SupabaseClient>(),
+        gh<_i258.ServiceUser>(),
+      ),
     );
     gh.lazySingleton<_i671.ProfileRepositoryDomain>(
       () =>

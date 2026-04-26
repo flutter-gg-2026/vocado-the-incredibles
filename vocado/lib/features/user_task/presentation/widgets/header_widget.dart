@@ -19,13 +19,14 @@ class HeaderWidget extends StatelessWidget {
             height: 48,
             width: 48,
             decoration: BoxDecoration(
-              color: const Color(0xffEAF0FF),
               borderRadius: BorderRadius.circular(16),
+              color: Theme.of(context).colorScheme.surfaceContainer,
+              boxShadow: kElevationToShadow[1],
             ),
-            child: const Icon(Icons.group, color: Color.fromARGB(255, 0, 0, 0)),
+            child: const Icon(Icons.group),
           ),
         ),
-         GestureDetector(
+        GestureDetector(
           onTap: () {
             context.push(Routes.profile);
           },
@@ -33,10 +34,11 @@ class HeaderWidget extends StatelessWidget {
             height: 48,
             width: 48,
             decoration: BoxDecoration(
-              color: const Color(0xffEAF0FF),
+              color: Theme.of(context).colorScheme.surfaceContainer,
               borderRadius: BorderRadius.circular(16),
+              boxShadow: kElevationToShadow[1],
             ),
-            child: const Icon(Icons.person, color: Color.fromARGB(255, 0, 0, 0)),
+            child: const Icon(Icons.person),
           ),
         ),
       ],

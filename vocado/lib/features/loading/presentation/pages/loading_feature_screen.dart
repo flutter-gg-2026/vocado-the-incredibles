@@ -10,15 +10,16 @@ class LoadingFeatureScreen extends StatelessWidget {
   const LoadingFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
-      final _ = context.read<LoadingCubit>();
+    final _ = context.read<LoadingCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Loading Feature Screen')),
       body: BlocListener<LoadingCubit, LoadingState>(
         listener: (context, state) {
           switch (state) {
             case LoadingSuccessState _:
-              context.go(Routes.addMembers);
+              state.user.role == .admin
+                  ? context.go(Routes.addMembers)
+                  : context.go(Routes.userTask);
             case LoadingErrorState _:
               context.go(Routes.auth);
           }

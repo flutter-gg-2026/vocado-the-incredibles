@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 
 class NavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;

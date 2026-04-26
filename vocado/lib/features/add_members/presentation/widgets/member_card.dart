@@ -5,11 +5,7 @@ class MemberCard extends StatelessWidget {
   final AddMembersEntity member;
   final bool isSelected;
 
-  const MemberCard({
-    super.key,
-    required this.member,
-    required this.isSelected,
-  });
+  const MemberCard({super.key, required this.member, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +13,7 @@ class MemberCard extends StatelessWidget {
       duration: const Duration(milliseconds: 250),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isSelected ? const Color(0xff3D35A6) : Colors.white,
+        color: isSelected ? const Color(0xff3D35A6) : null,
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
@@ -31,8 +27,9 @@ class MemberCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 26,
-            backgroundColor:
-                isSelected ? Colors.white : const Color(0xff3D35A6),
+            backgroundColor: isSelected
+                ? Colors.white
+                : const Color(0xff3D35A6),
             child: Text(
               member.name.isNotEmpty ? member.name[0].toUpperCase() : "?",
               style: TextStyle(
@@ -48,7 +45,9 @@ class MemberCard extends StatelessWidget {
             child: Text(
               member.name,
               style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xff24224A),
+                color: isSelected
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.onSurface,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
               ),

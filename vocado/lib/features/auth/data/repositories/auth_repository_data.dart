@@ -14,17 +14,6 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   AuthRepositoryData(this.remoteDataSource);
 
   @override
-  Future<Map<String, dynamic>> getCurrentUser(String userId) async {
-    try {
-      final response = await remoteDataSource.getCurrentUser(userId);
-      return response;
-    } catch (error) {
-
-      return Map();
-    }
-  }
-
-  @override
   Future<Result<void, Failure>> logOut() async {
     try {
       final response = await remoteDataSource.logOut();
@@ -41,9 +30,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
   ) async {
     try {
       final user = await remoteDataSource.logIn(email, password);
-      final profile = await remoteDataSource.getCurrentUser(user.id.toString());
-      final model = AuthModel.fromJson(profile);
-      final entity = model.toEntity();
+      final entity = user.toEntity();
       return Success(entity);
     } catch (error) {
       return Error(FailureExceptions.getException(error));

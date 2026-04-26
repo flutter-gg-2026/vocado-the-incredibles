@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/errors/network_exceptions.dart';
-import 'package:vocado/core/services/local_keys_service.dart';
 import 'package:vocado/features/view_members/data/models/view_members_model.dart';
 
 abstract class BaseViewMembersRemoteDataSource {
@@ -11,9 +10,8 @@ abstract class BaseViewMembersRemoteDataSource {
 @LazySingleton(as: BaseViewMembersRemoteDataSource)
 class ViewMembersRemoteDataSource implements BaseViewMembersRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
 
-  ViewMembersRemoteDataSource(this._localKeysService, this._supabase);
+  ViewMembersRemoteDataSource(this._supabase);
 
   @override
   Future<List<ViewMembersModel>> getViewMembers() async {

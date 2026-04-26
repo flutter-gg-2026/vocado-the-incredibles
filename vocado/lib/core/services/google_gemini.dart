@@ -41,7 +41,7 @@ class GoogleGemini {
 
     log('Google Service Started');
 
-    /* final response = await _dioClient.post(
+    final response = await _dioClient.post(
       ApiEndpoints.googleGeminiModelEndpoint(ApiEndpoints.geminiModel25Flash),
       data: body,
     );
@@ -55,11 +55,9 @@ class GoogleGemini {
 
     if ((taskJson as String).contains('not enough info')) {
       throw Exception('No Task is recognized');
-    } */
+    }
 
-    final json = jsonDecode(
-      '{ "task": "Finish Project", "assignee": "hamzah", "due_date": "2026-04-26" }',
-    );
+    final json = jsonDecode(taskJson);
 
     log('Google Service Finished');
 

@@ -14,14 +14,13 @@ class AddMembersFeatureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF4F5FB),
       body: SafeArea(
         child: BlocConsumer<AddMembersCubit, AddMembersState>(
           listener: (context, state) {
             if (state is AddMembersErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
             }
           },
           builder: (context, state) {
@@ -49,16 +48,11 @@ class AddMembersFeatureScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-          
                   const Gap(24),
 
                   const Text(
                     "Add members to your group",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w900,
-                      color: Color(0xff24224A),
-                    ),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                   ),
 
                   const Gap(20),
@@ -70,11 +64,7 @@ class AddMembersFeatureScreen extends StatelessWidget {
 
                   const Text(
                     "Members",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                      color: Color(0xff24224A),
-                    ),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
                   ),
 
                   const Gap(14),
@@ -84,12 +74,12 @@ class AddMembersFeatureScreen extends StatelessWidget {
                         ? const EmptyCard()
                         : ListView.separated(
                             itemCount: members.length,
-                            separatorBuilder: (context, index) =>
-                                const Gap(12),
+                            separatorBuilder: (context, index) => const Gap(12),
                             itemBuilder: (context, index) {
                               final member = members[index];
-                              final isSelected =
-                                  cubit.selectedMembers.contains(member);
+                              final isSelected = cubit.selectedMembers.contains(
+                                member,
+                              );
 
                               return Material(
                                 color: Colors.transparent,

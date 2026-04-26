@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -17,7 +16,6 @@ class UserTaskFeatureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF4F6FF),
       body: SafeArea(
         child: BlocBuilder<UserTaskCubit, UserTaskState>(
           builder: (context, state) {
@@ -32,8 +30,6 @@ class UserTaskFeatureScreen extends StatelessWidget {
             if (state is UserTaskSuccessState) {
               final allTask = state.tasks;
               final now = DateTime.now();
-
-         
 
               final newTasks = allTask
                   .where(
@@ -52,10 +48,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     (task) =>
                         task.status == 'Pending' &&
                         DateTime.parse(task.dueDate).isBefore(now) &&
-                        !DateUtils.isSameDay(
-                          DateTime.parse(task.dueDate),
-                          now,
-                        ),
+                        !DateUtils.isSameDay(DateTime.parse(task.dueDate), now),
                   )
                   .toList();
 
@@ -69,7 +62,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                   vertical: 28,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .stretch,
                   children: [
                     const HeaderWidget(),
 
@@ -78,7 +71,6 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     Text(
                       "welcome",
                       style: const TextStyle(
-                        color: Color(0xff102A63),
                         fontSize: 29,
                         fontWeight: FontWeight.w500,
                       ),
@@ -96,7 +88,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     SizedBox(
                       height: 190,
                       child: newTasks.isEmpty
-                          ?  EmptyTasksCard(text: "No new tasks")
+                          ? EmptyTasksCard(text: "No new tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: newTasks.length,
@@ -109,17 +101,14 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(34),
 
-                    SectionHeader(
-                      title: "Late",
-                      count: lateTasks.length,
-                    ),
+                    SectionHeader(title: "Late", count: lateTasks.length),
 
                     const Gap(18),
 
                     SizedBox(
                       height: 250,
                       child: lateTasks.isEmpty
-                          ?  EmptyTasksCard(text: "No late tasks")
+                          ? EmptyTasksCard(text: "No late tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: lateTasks.length,
@@ -140,7 +129,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     const Gap(18),
 
                     progressTasks.isEmpty
-                        ?  EmptyTasksCard(text: "No completed tasks")
+                        ? EmptyTasksCard(text: "No completed tasks")
                         : ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

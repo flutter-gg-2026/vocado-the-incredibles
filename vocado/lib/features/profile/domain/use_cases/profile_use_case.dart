@@ -4,7 +4,6 @@ import 'package:vocado/core/errors/failure.dart';
 import 'package:vocado/features/profile/domain/entities/profile_entity.dart';
 import 'package:vocado/features/profile/domain/repositories/profile_repository_domain.dart';
 
-
 @lazySingleton
 class ProfileUseCase {
   final ProfileRepositoryDomain _repositoryData;
@@ -15,7 +14,14 @@ class ProfileUseCase {
     return _repositoryData.getProfile(userId);
   }
 
-   Future<Result<ProfileEntity, Failure>> updateProfile(String name, String userId) async {
-    return _repositoryData.updateProfile(name ,userId);
+  Future<Result<ProfileEntity, Failure>> updateProfile(
+    String name,
+    String userId,
+  ) async {
+    return _repositoryData.updateProfile(name, userId);
+  }
+
+  Future<Result<void, Failure>> signOUt() {
+    return _repositoryData.signOUt();
   }
 }

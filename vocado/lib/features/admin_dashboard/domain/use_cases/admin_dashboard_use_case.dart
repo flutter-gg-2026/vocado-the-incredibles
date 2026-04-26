@@ -1,3 +1,4 @@
+
 import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/core/errors/failure.dart';
@@ -15,7 +16,7 @@ class AdminDashboardUseCase {
     return _repositoryData.getAdminDashboard();
   }
 
-  Future<Result<void, Failure>> removeTask(AdminDashboardEntity task) {
+  Future<Result<void, Failure>> removeTask(AdminDashboardEntity task) async {
     return _repositoryData.removeTask(task);
   }
 }

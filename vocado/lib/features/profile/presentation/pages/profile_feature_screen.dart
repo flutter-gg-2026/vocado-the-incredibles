@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vocado/core/extensions/context_extensions.dart';
+import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/core/utils/validators.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_state.dart';
 import 'package:gap/gap.dart';
-import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class ProfileFeatureScreen extends HookWidget {
@@ -13,9 +15,10 @@ class ProfileFeatureScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final nameController = useTextEditingController();
+    final cubit = context.read<ProfileCubit>();
 
     useEffect(() {
-      context.read<ProfileCubit>().getProfileMethod();
+      cubit.getProfileMethod();
       return null;
     }, const []);
 
@@ -25,16 +28,20 @@ class ProfileFeatureScreen extends HookWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.read<AuthCubit>().logOutMethod();
+              cubit.signOut();
             },
-            icon: const Icon(Icons.logout, color: Colors.red,),
+            icon: const Icon(Icons.logout, color: Colors.red),
           ),
         ],
+        leading: context.canPop()
+            ? BackButton(onPressed: () => context.pop())
+            : null,
       ),
       body: Padding(
         padding: const EdgeInsets.all(32),
         child: BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
+            context.hideLoading();
             if (state is ProfileErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -45,12 +52,20 @@ class ProfileFeatureScreen extends HookWidget {
             }
             if (state is ProfileSuccessState) {
               nameController.text = state.profile.name ?? '';
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Profile updated successfully "),
-                  backgroundColor: Colors.green,
-                ),
-              );
+              if (state.updated == true) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Profile updated successfully "),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              }
+            }
+            if (state is ProfileSignOutSuccessState) {
+              context.go(Routes.auth);
+            }
+            if (state is ProfileLoadingState) {
+              context.showLoading();
             }
           },
           child: BlocBuilder<ProfileCubit, ProfileState>(
@@ -83,7 +98,8 @@ class ProfileFeatureScreen extends HookWidget {
                         labelText: "Name",
                         border: OutlineInputBorder(),
                       ),
-                      validator: (value) => Validators.validateRequired(value, fieldName: 'Name'),
+                      validator: (value) =>
+                          Validators.validateRequired(value, fieldName: 'Name'),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     const Gap(16),

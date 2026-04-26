@@ -8,13 +8,12 @@ import 'package:vocado/features/profile/data/models/profile_model.dart';
 import 'package:vocado/features/profile/domain/repositories/profile_repository_domain.dart';
 
 @LazySingleton(as: ProfileRepositoryDomain)
-class ProfileRepositoryData implements ProfileRepositoryDomain{
+class ProfileRepositoryData implements ProfileRepositoryDomain {
   final BaseProfileRemoteDataSource remoteDataSource;
-
 
   ProfileRepositoryData(this.remoteDataSource);
 
-@override
+  @override
   Future<Result<ProfileEntity, Failure>> getProfile(String userId) async {
     try {
       final response = await remoteDataSource.getProfile(userId);
@@ -23,12 +22,25 @@ class ProfileRepositoryData implements ProfileRepositoryDomain{
       return Error(FailureExceptions.getException(error));
     }
   }
-  
+
   @override
-  Future<Result<ProfileEntity, Failure>> updateProfile( String name,String userId) async {
-    final response = await remoteDataSource.updateProfile( name, userId);
-    try{
-        return Success(response.toEntity());
+  Future<Result<ProfileEntity, Failure>> updateProfile(
+    String name,
+    String userId,
+  ) async {
+    final response = await remoteDataSource.updateProfile(name, userId);
+    try {
+      return Success(response.toEntity());
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> signOUt() async {
+    try {
+      await remoteDataSource.signOUt();
+      return Success(null);
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }

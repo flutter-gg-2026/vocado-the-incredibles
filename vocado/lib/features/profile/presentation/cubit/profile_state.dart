@@ -9,11 +9,15 @@ abstract class ProfileState extends Equatable {
 }
 
 class ProfileInitialState extends ProfileState {}
-class ProfileLoadingState extends ProfileState {}
-class ProfileSuccessState extends ProfileState {
 
+class ProfileLoadingState extends ProfileState {}
+
+class ProfileSignOutSuccessState extends ProfileState {}
+
+class ProfileSuccessState extends ProfileState {
   final ProfileEntity profile;
-  const ProfileSuccessState(this.profile);
+  final bool? updated;
+  const ProfileSuccessState(this.profile, {this.updated});
 
   @override
   List<Object?> get props => [profile];

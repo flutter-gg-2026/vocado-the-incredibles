@@ -11,55 +11,29 @@ abstract class BaseAuthRemoteDataSource {
     String role,
     String name,
   );
-  Future<Map<String, dynamic>> getCurrentUser(String userId);
   Future<void> logOut();
 }
 
 @LazySingleton(as: BaseAuthRemoteDataSource)
 class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
   final SupabaseClient _supabase;
-  final ServiceUser serviceUser;
-  AuthRemoteDataSource(this.serviceUser, this._supabase);
-
-  @override
-  Future<Map<String, dynamic>> getCurrentUser(String userId) async {
-    try {
-      final currentUser = _supabase.auth.currentUser;
-      if (currentUser == null) {
-        throw Exception('No user logged in');
-      }
-
-      final response = await _supabase
-          .from('users')
-          .select()
-          .eq('id', userId)
-          .single();
-
-      return response;
-    } catch (error) {
-
-      return {};
-    }
-  }
+  final ServiceUser _serviceUser;
+  AuthRemoteDataSource(this._serviceUser, this._supabase);
 
   @override
   Future<AuthModel> logIn(String email, String password) async {
-    try {
-      final response = await _supabase.auth.signInWithPassword(
-        password: password,
-        email: email,
-      );
-      final userId = response.user!.id;
-      final profile = await _supabase
-          .from('users')
-          .select()
-          .eq('id', userId)
-          .single();
-      return AuthModel.fromJson(profile);          //serviceUser.logIn(email, password);  
-    } catch (error) {
-      print(error.toString());
-      throw error;
-    }
+    final response = await _supabase.auth.signInWithPassword(
+      password: password,
+      email: email,
+    );
+    final userId = response.user!.id;
+    final profile = await _supabase
+        .from('users')
+        .select()
+        .eq('id', userId)
+        .single();
+    _serviceUser.setUser(AuthModel.fromJson(profile).toEntity());
+    return AuthModel.fromJson(profile);
   }
 
   @override
@@ -69,30 +43,26 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
     String role,
     String name,
   ) async {
-    try {
-      final response = await _supabase.auth.signUp(
-        email: email,
-        password: password,
-        data: {'full_name': name.trim(), 'role': role},
-      );
+    final response = await _supabase.auth.signUp(
+      email: email,
+      password: password,
+      data: {'full_name': name.trim(), 'role': role},
+    );
 
-      final user = response.user;
+    final user = response.user;
 
-      if (user == null) {
-        throw Exception('User is null');
-      }
-
-      final inserted = await _supabase
-          .from('users')
-          .insert({'id': user.id, 'email': email, 'name': name, 'role': role})
-          .select()
-          .single();
-
-      return AuthModel.fromJson(inserted);        //serviceUser.signUp(email, password, role, name);      
-    } catch (error) {
-      print(error.toString());
-      throw error;
+    if (user == null) {
+      throw Exception('User is null');
     }
+
+    final inserted = await _supabase
+        .from('users')
+        .insert({'id': user.id, 'email': email, 'name': name, 'role': role})
+        .select()
+        .single();
+
+    _serviceUser.setUser(AuthModel.fromJson(inserted).toEntity());
+    return AuthModel.fromJson(inserted);
   }
 
   @override

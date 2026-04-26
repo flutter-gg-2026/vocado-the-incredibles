@@ -1,7 +1,7 @@
 import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
+import 'package:vocado/core/common/entities/auth_entity.dart';
 import 'package:vocado/core/errors/failure.dart';
-import 'package:vocado/features/loading/domain/entities/loading_entity.dart';
 import 'package:vocado/features/loading/domain/repositories/loading_repository_domain.dart';
 
 
@@ -11,7 +11,7 @@ class LoadingUseCase {
 
   LoadingUseCase(this._repositoryData);
 
-   Future<Result<bool, Failure>> getLoading() async {
+   Future<Result<AuthEntity, Failure>> getLoading() async {
     return _repositoryData.getLoading();
   }
 }

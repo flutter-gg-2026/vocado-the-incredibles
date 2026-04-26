@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -14,23 +16,20 @@ class AuthFeatureScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isLogin = useState(true);
-    final formKeyEmail = GlobalKey<FormState>();
-    final formKeyName = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     final formKeyPassword = GlobalKey<FormState>();
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     final nameController = useTextEditingController();
+    final cubit = context.read<AuthCubit>();
 
     final role = useState('user');
 
     void handleAuth() {
-      if (isLogin.value) {
-        context.read<AuthCubit>().loginMethod(
-          emailController.text,
-          passwordController.text,
-        );
-      } else {
-        context.read<AuthCubit>().signUpMethod(
+      if (isLogin.value && formKey.currentState!.validate()) {
+        cubit.loginMethod(emailController.text, passwordController.text);
+      } else if (formKey.currentState!.validate()) {
+        cubit.signUpMethod(
           emailController.text,
           passwordController.text,
           role.value,
@@ -46,23 +45,8 @@ class AuthFeatureScreen extends HookWidget {
             padding: const EdgeInsets.all(24),
             child: BlocListener<AuthCubit, AuthState>(
               listener: (context, state) {
-                 print("STATE: $state");
                 context.hideLoading();
                 if (state is AuthSuccessState) {
-<<<<<<< HEAD
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Success'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                  context.go(Routes.addMembers);
-
-                  emailController.clear();
-                  passwordController.clear();
-                  nameController.clear();
-                } if (state is AuthErrorState) {
-=======
                   if (!isLogin.value) {
                     if (role.value == 'user') {
                       context.go(Routes.userTask);
@@ -79,7 +63,6 @@ class AuthFeatureScreen extends HookWidget {
                     }
                   }
                 } else if (state is AuthErrorState) {
->>>>>>> main
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),
@@ -90,153 +73,118 @@ class AuthFeatureScreen extends HookWidget {
               },
               child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
-
                   final isBlocLoading = state is AuthLoadingState;
-                  return Column(
-                    children: [
-                      Gap(32),
+                  log(isBlocLoading.toString());
+                  return Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Gap(32),
 
-                      Text(
-                        isLogin.value ? "Login" : "Sign Up",
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          isLogin.value ? "Login" : "Sign Up",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
 
-                      Gap(32),
+                        Gap(32),
 
-                      if (!isLogin.value)
+                        if (!isLogin.value)
+                          TextFormField(
+                            controller: nameController,
+                            decoration: InputDecoration(
+                              labelText: "Name",
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: (value) => isLogin.value
+                                ? null
+                                : Validators.validateRequired(
+                                    value,
+                                    fieldName: 'Name',
+                                  ),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                          ),
+
+                        if (!isLogin.value) Gap(16),
+
                         TextFormField(
-                          key: formKeyName,
-                          controller: nameController,
+                          controller: emailController,
                           decoration: InputDecoration(
-                            labelText: "Name",
+                            labelText: "Email",
                             border: OutlineInputBorder(),
                           ),
-                          validator: (value) => Validators.validateRequired(
-                            value,
-                            fieldName: 'Name',
-                          ),
+                          validator: Validators.validateEmail,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
 
-                      if (!isLogin.value) Gap(16),
+                        Gap(16),
 
-                      TextFormField(
-                        key: formKeyEmail,
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: Validators.validateEmail,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-
-                      Gap(16),
-
-                      TextFormField(
-                        key: formKeyPassword,
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: Validators.validatePassword,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                      ),
-
-                      Gap(16),
-
-                      if (!isLogin.value)
-                        DropdownButtonFormField<String>(
-                          value: role.value,
-                          items: [
-                            DropdownMenuItem(
-                              value: 'user',
-                              child: Text("User"),
-                            ),
-                            DropdownMenuItem(
-                              value: 'admin',
-                              child: Text("Admin"),
-                            ),
-                          ],
-                          onChanged: (val) => role.value = val!,
-                          decoration: const InputDecoration(
-                            labelText: "Role",
+                        TextFormField(
+                          key: formKeyPassword,
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: "Password",
                             border: OutlineInputBorder(),
                           ),
+                          validator: Validators.validatePassword,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
 
-                      Gap(24),
+                        Gap(16),
 
-                      SizedBox(
-                        width: double.infinity,
+                        if (!isLogin.value)
+                          DropdownButtonFormField<String>(
+                            value: role.value,
+                            items: [
+                              DropdownMenuItem(
+                                value: 'user',
+                                child: Text("User"),
+                              ),
+                              DropdownMenuItem(
+                                value: 'admin',
+                                child: Text("Admin"),
+                              ),
+                            ],
+                            onChanged: (val) => role.value = val!,
+                            decoration: const InputDecoration(
+                              labelText: "Role",
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+
+                        Gap(24),
+
+                        SizedBox(
+                          width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => isBlocLoading ? null : handleAuth,
+                            onPressed: () => handleAuth(),
                             child: isBlocLoading
                                 ? const CircularProgressIndicator()
                                 : Text(isLogin.value ? "Login" : "Sign Up"),
                           ),
-                      ),
-
-                      const Gap(16),
-
-                      TextButton(
-                        onPressed: () {
-                          isLogin.value = !isLogin.value;
-                        },
-                        child: Text(
-                          isLogin.value
-                              ? "Don't have account? Sign Up"
-                              : "Already have account? Login",
                         ),
-                      ),
 
-<<<<<<< HEAD
-                      // IconButton(
-                      //   onPressed: () {
-                      //     context.push(Routes.profile);
-                      //   },
-                      //   icon: Icon(Icons.square, size: 30,),
-                      // ),
-                    ],
+                        const Gap(16),
+
+                        TextButton(
+                          onPressed: () {
+                            isLogin.value = !isLogin.value;
+                          },
+                          child: Text(
+                            isLogin.value
+                                ? "Don't have account? Sign Up"
+                                : "Already have account? Login",
+                          ),
+                        ),
+                      ],
+                    ),
                   );
                 },
               ),
-=======
-                    Gap(24),
-
-                    // BUTTON
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: isBlocLoading ? null : handleAuth,
-                        child: isBlocLoading
-                            ? const CircularProgressIndicator()
-                            : Text(isLogin.value ? "Login" : "Sign Up"),
-                      ),
-                    ),
-
-                    const Gap(16),
-
-                    // TOGGLE
-                    TextButton(
-                      onPressed: () {
-                        isLogin.value = !isLogin.value;
-                      },
-                      child: Text(
-                        isLogin.value
-                            ? "Don't have account? Sign Up"
-                            : "Already have account? Login",
-                      ),
-                    ),
-                  ],
-                );
-              },
->>>>>>> main
             ),
           ),
         ),

@@ -9,7 +9,6 @@ class SectionHeader extends StatelessWidget {
   final Color? countColor;
   final Color countTextColor;
 
-
   const SectionHeader({
     super.key,
     required this.title,
@@ -17,7 +16,6 @@ class SectionHeader extends StatelessWidget {
     this.count,
     this.countColor,
     this.countTextColor = Colors.white,
-
   });
 
   @override
@@ -27,11 +25,7 @@ class SectionHeader extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: title,
-            style: const TextStyle(
-              color: Color(0xff102A63),
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-            ),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
             children: [
               if (subtitle != null)
                 TextSpan(
@@ -56,9 +50,6 @@ class SectionHeader extends StatelessWidget {
           ),
         ],
         const Spacer(),
-       
-  
-        
       ],
     );
   }
