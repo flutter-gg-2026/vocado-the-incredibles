@@ -49,37 +49,37 @@ class AuthFeatureScreen extends HookWidget {
                  print("STATE: $state");
                 context.hideLoading();
                 if (state is AuthSuccessState) {
-<<<<<<< HEAD
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Success'),
                       backgroundColor: Colors.green,
                     ),
                   );
-                  context.go(Routes.addMembers);
+                  // context.go(Routes.addMembers);
 
                   emailController.clear();
                   passwordController.clear();
                   nameController.clear();
                 } if (state is AuthErrorState) {
-=======
-                  if (!isLogin.value) {
-                    if (role.value == 'user') {
-                      context.go(Routes.userTask);
-                    } else {
-                      context.go(Routes.addMembers);
-                    }
-                  } else {
-                    if (state.user != null) {
-                      if (state.user!.role == .admin) {
-                        context.go(Routes.addMembers);
-                      } else {
-                        context.go(Routes.userTask);
-                      }
-                    }
-                  }
+
+                  // if (!isLogin.value) {
+                  //   if (role.value == 'user') {
+                  //     context.go(Routes.userTask);
+                  //   } else {
+                  //     context.go(Routes.addMembers);
+                  //   }
+                  // } else {
+                  //   if (state.user != null) {
+                  //     if (state.user!.role == .admin) {
+                  //       context.go(Routes.addMembers);
+                  //     } else {
+                  //       context.go(Routes.userTask);
+                  //     }
+                  //   }
+                  // }
                 } else if (state is AuthErrorState) {
->>>>>>> main
+
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),
@@ -186,7 +186,25 @@ class AuthFeatureScreen extends HookWidget {
 
                       TextButton(
                         onPressed: () {
+
                           isLogin.value = !isLogin.value;
+                          
+                  //               if (!isLogin.value) {
+                  //   if (role.value == 'user') {
+                  //     context.go(Routes.userTask);
+                  //   } else {
+                  //     context.go(Routes.addMembers);
+                  //   }
+                  // } 
+                  // else {
+                  //   if (state.user != null) {
+                  //     if (state.user!.role == .admin) {
+                  //       context.go(Routes.addMembers);
+                  //     } else {
+                  //       context.go(Routes.userTask);
+                  //     }
+                  //   }
+                  // }
                         },
                         child: Text(
                           isLogin.value
@@ -194,31 +212,7 @@ class AuthFeatureScreen extends HookWidget {
                               : "Already have account? Login",
                         ),
                       ),
-
-<<<<<<< HEAD
-                      // IconButton(
-                      //   onPressed: () {
-                      //     context.push(Routes.profile);
-                      //   },
-                      //   icon: Icon(Icons.square, size: 30,),
-                      // ),
-                    ],
-                  );
-                },
-              ),
-=======
                     Gap(24),
-
-                    // BUTTON
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: isBlocLoading ? null : handleAuth,
-                        child: isBlocLoading
-                            ? const CircularProgressIndicator()
-                            : Text(isLogin.value ? "Login" : "Sign Up"),
-                      ),
-                    ),
 
                     const Gap(16),
 
@@ -233,14 +227,15 @@ class AuthFeatureScreen extends HookWidget {
                             : "Already have account? Login",
                       ),
                     ),
-                  ],
-                );
-              },
->>>>>>> main
+
+                    ],
+                  );
+                },
+              ),
+
+
             ),
-          ),
-        ),
-      ),
+          ),),),
     );
   }
 }

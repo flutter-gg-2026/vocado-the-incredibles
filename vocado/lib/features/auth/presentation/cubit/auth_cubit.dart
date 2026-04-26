@@ -21,7 +21,7 @@ Future<void> checkAuth() async {
 
 
   Future<void> loginMethod(String email, String password) async {
-    print('________________ggg__________');
+
     emit(AuthLoadingState());
     final result = await _authUseCase.logIn(email,password);
     
@@ -31,10 +31,6 @@ Future<void> checkAuth() async {
         emit(AuthSuccessState(success));
       },
       (whenError) {
-<<<<<<< HEAD
-=======
-
->>>>>>> main
        emit(AuthErrorState(message: whenError.message));
       },
     );
@@ -44,7 +40,6 @@ Future<void> checkAuth() async {
 
   Future<void> signUpMethod (String email, String password, String role, String name)async {
     emit(AuthLoadingState());
-    print('shhhhhhhhhhhhhh');
     final result = await _authUseCase.signUp(email, password, role, name);
     result.when(
       (success) {
