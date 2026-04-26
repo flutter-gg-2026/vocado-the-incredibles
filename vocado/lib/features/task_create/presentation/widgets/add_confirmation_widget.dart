@@ -28,7 +28,7 @@ class AddConfirmationWidget extends HookWidget {
             crossAxisAlignment: .start,
             children: [
               Text(
-                'You can edit task and name if needed',
+                'You can edit task and name if needed, (Make sure name is already added to your team)',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               CustomTextField(controller: taskController, label: 'Task is:'),
