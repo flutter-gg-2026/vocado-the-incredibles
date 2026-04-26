@@ -1,6 +1,10 @@
 import 'package:vocado/features/view_members/domain/entities/view_members_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'view_members_model.freezed.dart';
+<<<<<<< HEAD
+// part 'view_members_model.g.dart';
+=======
+>>>>>>> main
 
 @freezed
 abstract class ViewMembersModel with _$ViewMembersModel {

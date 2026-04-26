@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'core/setup.dart';
 import 'core/theme/app_theme.dart';
 import 'core/di/configure_dependencies.dart';

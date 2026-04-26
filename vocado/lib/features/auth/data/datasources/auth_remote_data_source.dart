@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/common/models/auth_model.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 
 abstract class BaseAuthRemoteDataSource {
-
   Future<AuthModel> logIn(String email, String password);
   Future<AuthModel> signUp(
     String email,
@@ -19,8 +18,8 @@ abstract class BaseAuthRemoteDataSource {
 @LazySingleton(as: BaseAuthRemoteDataSource)
 class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
   final SupabaseClient _supabase;
-  final ServiceUser service;
-  AuthRemoteDataSource(this.service, this._supabase);
+  final ServiceUser serviceUser;
+  AuthRemoteDataSource(this.serviceUser, this._supabase);
 
   @override
   Future<Map<String, dynamic>> getCurrentUser(String userId) async {
@@ -56,8 +55,9 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
           .select()
           .eq('id', userId)
           .single();
-      return AuthModel.fromJson(profile);
+      return AuthModel.fromJson(profile);          //serviceUser.logIn(email, password);  
     } catch (error) {
+      print(error.toString());
       throw error;
     }
   }
@@ -88,8 +88,9 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
           .select()
           .single();
 
-      return AuthModel.fromJson(inserted);
+      return AuthModel.fromJson(inserted);        //serviceUser.signUp(email, password, role, name);      
     } catch (error) {
+      print(error.toString());
       throw error;
     }
   }

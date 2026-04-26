@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/profile/domain/use_cases/profile_use_case.dart';
 import 'package:vocado/features/profile/presentation/cubit/profile_state.dart';
 @injectable
@@ -38,8 +38,8 @@ class ProfileCubit extends Cubit<ProfileState> {
    
 
 Future<void> updateProfileMethod(String name) async {
+  
   final userId = _serviceUser.currentUser!.id;
-
   final result = await _profileUseCase.updateProfile(name, userId);
 
   result.when(

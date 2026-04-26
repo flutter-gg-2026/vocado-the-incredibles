@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/admin_dashboard/data/models/admin_dashboard_model.dart';
 import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_entity.dart';
 

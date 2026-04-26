@@ -19,7 +19,7 @@ import '../network/dio_client.dart' as _i667;
 import '../services/google_gemini.dart' as _i416;
 import '../services/local_keys_service.dart' as _i945;
 import '../services/record_service.dart' as _i982;
-import '../services/serviceUser.dart' as _i1000;
+import '../services/service_user.dart' as _i108;
 import '../services/speech_to_text.dart' as _i242;
 import 'third_part.dart' as _i423;
 
@@ -40,8 +40,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => thirdPartyConfig.flutterSecureStorage,
     );
     gh.lazySingleton<_i982.RecordService>(() => _i982.RecordService());
-    gh.lazySingleton<_i1000.ServiceUser>(
-      () => _i1000.ServiceUser(gh<_i454.SupabaseClient>()),
+    gh.lazySingleton<_i108.ServiceUser>(
+      () => _i108.ServiceUser(gh<_i454.SupabaseClient>()),
     );
     gh.lazySingleton<_i416.GoogleGemini>(
       () => _i416.GoogleGemini(gh<_i667.DioClient>()),

@@ -7,4 +7,5 @@ class Routes {
   static const String addMembers = '/addMembers';
   static const String userTask = '/userTask';
   static const String viewMembers = '/viewMembers';
+  static const String loading = '/loading';
 }

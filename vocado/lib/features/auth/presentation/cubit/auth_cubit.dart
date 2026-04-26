@@ -1,22 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:vocado/core/di/configure_dependencies.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:injectable/injectable.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_state.dart';
 
+@injectable
 class AuthCubit extends Cubit<AuthState> {
   final AuthUseCase _authUseCase;
-  AuthCubit(this._authUseCase) : super(AuthInitialState());
-
-  final service = GetIt.instance;
-  final serviceUser = getIt<ServiceUser>();
+  final ServiceUser _serviceUser;
+  AuthCubit(this._authUseCase,  this._serviceUser): super(AuthInitialState());
 
 Future<void> checkAuth() async {
-  final serviceUser = getIt<ServiceUser>();
 
-  if (serviceUser.isLoggedIn) {
-    emit(AuthSuccessState(serviceUser.currentUser));
+  if (_serviceUser.isLoggedIn) {
+    emit(AuthSuccessState(_serviceUser.currentUser));
   } else {
     emit(AuthInitialState());
   }
@@ -24,15 +21,20 @@ Future<void> checkAuth() async {
 
 
   Future<void> loginMethod(String email, String password) async {
-    final result = await _authUseCase.logIn(email,password);
+    print('________________ggg__________');
     emit(AuthLoadingState());
+    final result = await _authUseCase.logIn(email,password);
+    
     result.when(
       (success) {
-        serviceUser.setUser(success);
+        _serviceUser.setUser(success);
         emit(AuthSuccessState(success));
       },
       (whenError) {
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
        emit(AuthErrorState(message: whenError.message));
       },
     );
@@ -42,10 +44,11 @@ Future<void> checkAuth() async {
 
   Future<void> signUpMethod (String email, String password, String role, String name)async {
     emit(AuthLoadingState());
+    print('shhhhhhhhhhhhhh');
     final result = await _authUseCase.signUp(email, password, role, name);
     result.when(
       (success) {
-        serviceUser.setUser(success);
+        _serviceUser.setUser(success);
         emit(AuthSuccessState(success));
       },
       (whenError) {
@@ -60,8 +63,8 @@ Future<void> checkAuth() async {
     result.when(
       (success) {
         emit(UnauthenticatedState());
-        serviceUser.signOut();
-        serviceUser.loadSession();
+        _serviceUser.signOut();
+        _serviceUser.loadSession();
       },
       (whenError) {
        emit(AuthErrorState(message: whenError.message));

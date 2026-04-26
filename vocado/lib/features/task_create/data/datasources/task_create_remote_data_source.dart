@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/services/google_gemini.dart';
-import 'package:vocado/core/services/serviceUser.dart';
+import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/core/services/speech_to_text.dart';
 import 'package:vocado/features/task_create/data/models/task_create_model.dart';
 import 'package:vocado/features/task_create/domain/entities/task_create_entity.dart';
