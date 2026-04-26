@@ -4,4 +4,5 @@ import 'package:vocado/features/user_task/domain/entities/user_task_entity.dart'
 
 abstract class UserTaskRepositoryDomain {
   Future<Result<List<UserTaskEntity>, Failure>> getUserTasks();
+  Future<Result<void, Failure>> markTaskDone(String taskId);
 }

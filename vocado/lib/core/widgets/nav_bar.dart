@@ -1,16 +1,22 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vocado/core/services/serviceUser.dart';
 
 class NavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
-  const NavBar({super.key, required this.navigationShell});
+  final ServiceUser _serviceUser;
+  const NavBar({
+    super.key,
+    required this.navigationShell,
+    required ServiceUser serviceUser,
+  }) : _serviceUser = serviceUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: SafeArea(
+      bottomNavigationBar: _serviceUser.isAdmin ? SafeArea(
         child: CurvedNavigationBar(
           height: 50,
           index: navigationShell.currentIndex,
@@ -19,14 +25,15 @@ class NavBar extends StatelessWidget {
           buttonBackgroundColor: Theme.of(context).colorScheme.primary,
           items: [
             Icon(Icons.home, size: 30),
+            Icon(Icons.group, size: 30),
+            Icon(Icons.dashboard, size: 30),
             Icon(Icons.person, size: 30),
-            Icon(Icons.dashboard, size: 30), 
           ],
           onTap: (index) {
             navigationShell.goBranch(index);
           },
         ),
-      ),
+      ) : null,
       body: navigationShell,
     );
   }

@@ -71,7 +71,7 @@ class SpeechToText {
       data: {
         "audio_url": audioUrl,
         "language_config": {
-          "languages": ["ar"],
+          "languages": ["ar", "en"],
           "code_switching": false,
         },
         "diarization": true,

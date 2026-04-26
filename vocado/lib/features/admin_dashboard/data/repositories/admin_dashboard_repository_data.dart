@@ -27,4 +27,16 @@ class AdminDashboardRepositoryData implements AdminDashboardRepositoryDomain{
       return Error(FailureExceptions.getException(error));
     }
   }
+
+  @override
+  Future<Result<void, Failure>> removeTask(AdminDashboardEntity task) async {
+    try {
+      await remoteDataSource.getAdminDashboard();
+      return Success(null);
+    } on Failure catch (error) {
+      return Error(error);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
 }

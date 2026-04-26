@@ -2,9 +2,11 @@ import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/services/service_user.dart';
 import 'package:vocado/features/admin_dashboard/data/models/admin_dashboard_model.dart';
+import 'package:vocado/features/admin_dashboard/domain/entities/admin_dashboard_entity.dart';
 
 abstract class BaseAdminDashboardRemoteDataSource {
   Future<List<AdminDashboardModel>> getAdminDashboard();
+  Future<void> removeTask(AdminDashboardEntity task);
 }
 
 @LazySingleton(as: BaseAdminDashboardRemoteDataSource)
@@ -20,7 +22,7 @@ class AdminDashboardRemoteDataSource
     final response = await _supabase
         .from('tasks')
         .select('*, users!assignee_id(name)')
-        .eq('assigned_by', '27213c3d-1cd2-4a5c-96f9-3c7d312cc1eb');
+        .eq('assigned_by', _serviceUser.currentUser!.id);
 
     final tasks = response.map((task) {
       task['name'] = task['users']['name'];
@@ -28,5 +30,10 @@ class AdminDashboardRemoteDataSource
       return task;
     }).toList();
     return tasks.map((json) => AdminDashboardModel.fromJson(json)).toList();
+  }
+
+  @override
+  Future<void> removeTask(AdminDashboardEntity task) async {
+    await _supabase.from('tasks').delete().eq('id', task.id);
   }
 }

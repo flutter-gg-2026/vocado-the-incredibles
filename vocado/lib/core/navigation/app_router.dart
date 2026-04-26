@@ -27,19 +27,19 @@ import 'package:vocado/features/loading/presentation/cubit/loading_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.loading,
+    initialLocation: Routes.auth,
     routes: [
-      GoRoute(
-        path: Routes.splash,
-        redirect: (context, state) {
-          final serviceUser = getIt<ServiceUser>();
-          if (!serviceUser.isLoggedIn) return Routes.auth;
-          return null;
-        },
-        builder: (context, state) {
-          return Scaffold(body: Center(child: Text("splash screen")));
-        },
-      ),
+      // GoRoute(
+      //   path: Routes.splash,
+      //   redirect: (context, state) {
+      //     final serviceUser = getIt<ServiceUser>();
+      //     if (!serviceUser.isLoggedIn) return Routes.auth;
+      //     return null;
+      //   },
+      //   builder: (context, state) {
+      //     return Scaffold(body: Center(child: Text("splash screen")));
+      //   },
+      // ),
 
       GoRoute(
         path: Routes.userTask,
@@ -72,7 +72,7 @@ class AppRouter {
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
-            NavBar(navigationShell: navigationShell),
+            NavBar(navigationShell: navigationShell, serviceUser: null,),
         branches: [
           StatefulShellBranch(
             routes: [

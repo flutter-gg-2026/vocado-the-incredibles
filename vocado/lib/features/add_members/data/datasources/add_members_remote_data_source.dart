@@ -21,14 +21,13 @@ abstract class BaseAddMembersRemoteDataSource {
 class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
   final SupabaseClient _supabase;
 
-  AddMembersRemoteDataSource( this._supabase);
+  AddMembersRemoteDataSource(this._supabase);
 
   @override
   Future<List<AddMembersModel>> getAddMembers() async {
     try {
       final response = await _supabase.from('users').select();
 
-      print('USERS RESPONSE: $response');
 
       return response.map((json) => AddMembersModel.fromJson(json)).toList();
     } catch (error) {
@@ -37,33 +36,29 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
   }
 
   @override
-  Future<void> createGroupMembers(List<String> userIds) async {
-    try {
-      final user = _supabase.auth.currentUser;
+Future<void> createGroupMembers(List<String> userIds) async {
+  try {
+    final user = _supabase.auth.currentUser;
 
-      if (user == null) {
-        throw Exception('No logged in user');
-      }
-
-      final adminId = user.id;
-
-      final data = userIds.map((userId) {
-        return {
-          'user_id': userId,
-          'admin_id': adminId,
-          'due_date': DateTime.now().toIso8601String(),
-        };
-      }).toList();
-
-      final response = await _supabase.from('members').insert(data).select();
-
-      print('INSERT RESPONSE: $response');
-    } catch (error) {
-      print('INSERT ERROR: $error');
-      throw FailureExceptions.getException(error);
+    if (user == null) {
+      throw Exception('No logged in user');
     }
-  }
 
+    final adminId = user.id;
+
+    final data = userIds.map((userId) {
+      return {
+        'user_id': userId,
+        'admin_id': adminId,
+        'group_create_date': DateTime.now().toIso8601String(),
+      };
+    }).toList();
+
+    await _supabase.from('members').insert(data);
+  } catch (error) {
+    throw FailureExceptions.getException(error);
+  }
+}
   @override
   Future<List<Map<String, dynamic>>> getMembersList() async {
     try {
@@ -71,7 +66,6 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
           .from('members')
           .select('id, user_id, admin_id, due_date');
 
-      print('MEMBERS LIST: $response');
 
       return List<Map<String, dynamic>>.from(response);
     } catch (error) {
@@ -85,17 +79,15 @@ class AddMembersRemoteDataSource implements BaseAddMembersRemoteDataSource {
     required DateTime dueDate,
   }) async {
     try {
-      final response = await _supabase
+      await _supabase
           .from('members')
-          .update({
-            'due_date': dueDate.toIso8601String(),
-          })
+          .update({'due_date': dueDate.toIso8601String()})
           .eq('id', memberRowId)
           .select();
 
-      print('UPDATE MEMBER RESPONSE: $response');
+   
     } catch (error) {
-      print('UPDATE MEMBER ERROR: $error');
+     
       throw FailureExceptions.getException(error);
     }
   }

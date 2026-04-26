@@ -17,7 +17,7 @@ Future<void> main() async {
   final serviceUser = getIt<ServiceUser>();
   await serviceUser.loadSession();
 } catch (error) {
-  print('LOAD SESSION ERROR: $error');
+
 }
 
 

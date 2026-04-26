@@ -1,8 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vocado/features/user_task/domain/entities/user_task_entity.dart';
-
 part 'user_task_model.freezed.dart';
-part 'user_task_model.g.dart';
+
 
 @freezed
 abstract class UserTaskModel with _$UserTaskModel {
@@ -18,8 +17,19 @@ abstract class UserTaskModel with _$UserTaskModel {
     required String name, 
    }) = _UserTaskModel;
 
-  factory UserTaskModel.fromJson(Map<String, Object?> json) =>
-      _$UserTaskModelFromJson(json);
+  factory UserTaskModel.fromJson(Map<String, Object?> json) {
+  final user = json['user'] as Map<String, dynamic>?;
+
+  return UserTaskModel(
+    id: json['id']?.toString() ?? '',
+    title: json['task']?.toString() ?? 'No title',
+    status: json['completed'] == true,
+    dueDate: json['due_date'] == null
+        ? DateTime.now()
+        : DateTime.parse(json['due_date'].toString()),
+    name: user?['name']?.toString() ?? 'User',
+  );
+}
 }
 
 extension UserTaskModelMapper on UserTaskModel {

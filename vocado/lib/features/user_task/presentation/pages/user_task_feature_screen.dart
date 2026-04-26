@@ -1,8 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_cubit.dart';
 import 'package:vocado/features/user_task/presentation/cubit/user_task_state.dart';
 import 'package:vocado/features/user_task/presentation/widgets/empty_tasks_card.dart';
@@ -31,20 +30,37 @@ class UserTaskFeatureScreen extends StatelessWidget {
             }
 
             if (state is UserTaskSuccessState) {
-              final name = state.tasks.isNotEmpty
-                  ? state.tasks.first.name
-                  : 'User';
+              final allTask = state.tasks;
+              final now = DateTime.now();
 
-              final newTasks = state.tasks
-                  .where((task) => task.status == 'new')
+         
+
+              final newTasks = allTask
+                  .where(
+                    (task) =>
+                        task.status == 'Pending' &&
+                        (DateTime.parse(task.dueDate).isAfter(now) ||
+                            DateUtils.isSameDay(
+                              DateTime.parse(task.dueDate),
+                              now,
+                            )),
+                  )
                   .toList();
 
-              final lateTasks = state.tasks
-                  .where((task) => task.status == 'late')
+              final lateTasks = allTask
+                  .where(
+                    (task) =>
+                        task.status == 'Pending' &&
+                        DateTime.parse(task.dueDate).isBefore(now) &&
+                        !DateUtils.isSameDay(
+                          DateTime.parse(task.dueDate),
+                          now,
+                        ),
+                  )
                   .toList();
 
               final progressTasks = state.tasks
-                  .where((task) => task.status == 'in_progress')
+                  .where((task) => task.status == 'Pending')
                   .toList();
 
               return SingleChildScrollView(
@@ -59,14 +75,12 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(36),
 
-                    Center(
-                      child: Text(
-                        "Hello, $name",
-                        style: const TextStyle(
-                          color: Color(0xff102A63),
-                          fontSize: 22,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    Text(
+                      "welcome",
+                      style: const TextStyle(
+                        color: Color(0xff102A63),
+                        fontSize: 29,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
 
@@ -82,7 +96,7 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     SizedBox(
                       height: 190,
                       child: newTasks.isEmpty
-                          ? const EmptyTasksCard(text: "No new tasks")
+                          ?  EmptyTasksCard(text: "No new tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: newTasks.length,
@@ -95,14 +109,17 @@ class UserTaskFeatureScreen extends StatelessWidget {
 
                     const Gap(34),
 
-                    SectionHeader(title: "Late", count: lateTasks.length),
+                    SectionHeader(
+                      title: "Late",
+                      count: lateTasks.length,
+                    ),
 
                     const Gap(18),
 
                     SizedBox(
                       height: 250,
                       child: lateTasks.isEmpty
-                          ? const EmptyTasksCard(text: "No late tasks")
+                          ?  EmptyTasksCard(text: "No late tasks")
                           : ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemCount: lateTasks.length,
@@ -116,14 +133,14 @@ class UserTaskFeatureScreen extends StatelessWidget {
                     const Gap(34),
 
                     SectionHeader(
-                      title: "Progress",
+                      title: "Completed",
                       count: progressTasks.length,
                     ),
 
                     const Gap(18),
 
                     progressTasks.isEmpty
-                        ? const EmptyTasksCard(text: "No progress tasks")
+                        ?  EmptyTasksCard(text: "No completed tasks")
                         : ListView.separated(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

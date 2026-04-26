@@ -31,6 +31,10 @@ Future<void> checkAuth() async {
         emit(AuthSuccessState(success));
       },
       (whenError) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
        emit(AuthErrorState(message: whenError.message));
       },
     );

@@ -19,7 +19,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
       final response = await remoteDataSource.getCurrentUser(userId);
       return response;
     } catch (error) {
-      print(error.toString());
+
       return Map();
     }
   }
@@ -68,7 +68,7 @@ class AuthRepositoryData implements AuthRepositoryDomain {
       final entity = userModel.toEntity();
       return Success(entity);
     } catch (error) {
-      print(error.toString());
+
       return Error(FailureExceptions.getException(error));
     }
   }

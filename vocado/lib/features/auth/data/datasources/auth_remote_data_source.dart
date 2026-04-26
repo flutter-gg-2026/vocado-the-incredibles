@@ -37,7 +37,7 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
 
       return response;
     } catch (error) {
-      print(error.toString());
+
       return {};
     }
   }
